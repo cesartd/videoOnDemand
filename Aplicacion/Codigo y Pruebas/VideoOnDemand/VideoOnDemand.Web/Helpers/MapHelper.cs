@@ -17,6 +17,7 @@ namespace VideoOnDemand.Web.Helpers
             var config = new MapperConfiguration(x => {
                 x.CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
                 x.CreateMap<Genero, GeneroViewModel>().ReverseMap();
+                x.CreateMap<Persona, PersonaViewModel>().ReverseMap();//Se crea el de persona
                });
             mapper = config.CreateMapper();
         }
