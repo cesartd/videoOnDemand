@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace VideoOnDemand.Entities
+namespace VideoOnDemand.Web.Models
 {
-    public class Usuario
+    public class GeneroViewModel
     {
         public int? Id { get; set; }
-
         public string Nombre { get; set; }
+        public string Descripcion { get; set; }
 
-        public string IdentityId { get; set; }
     }
 }

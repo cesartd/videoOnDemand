@@ -20,5 +20,6 @@ namespace VideoOnDemand.Entities
         public int? MediaId { get; set; }
         
 
+
     }
 }

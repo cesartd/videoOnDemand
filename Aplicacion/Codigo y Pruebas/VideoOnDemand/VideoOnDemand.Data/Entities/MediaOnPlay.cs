@@ -16,5 +16,8 @@ namespace VideoOnDemand.Entities
 
         public Usuario Usuario { get; set; }
         public int? UsuarioId { get; set; }
+
+        public bool? Activo { get; set; }
+
     }
 }
