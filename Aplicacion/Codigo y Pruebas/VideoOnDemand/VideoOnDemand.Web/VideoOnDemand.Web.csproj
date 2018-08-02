@@ -182,6 +182,9 @@
     <Compile Include="Controllers\GeneroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManagePeliculaController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\PeliculaController.cs" />
     <Compile Include="Controllers\PersonaController.cs" />
     <Compile Include="Controllers\SerieController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="Models\GeneroViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MovieViewModel.cs" />
     <Compile Include="Models\PaginatorViewModel.cs" />
     <Compile Include="Models\PersonaViewModel.cs" />
     <Compile Include="Models\SerieViewModel.cs" />
@@ -690,9 +694,20 @@
     <Content Include="Views\Persona\Delete.cshtml" />
     <Content Include="Views\Persona\Edit.cshtml" />
     <Content Include="Views\Persona\Index.cshtml" />
+    <Content Include="Views\ManagePelicula\Create.cshtml" />
+    <Content Include="Views\ManagePelicula\Delete.cshtml" />
+    <Content Include="Views\ManagePelicula\Edit.cshtml" />
+    <Content Include="Views\ManagePelicula\Index.cshtml" />
+    <Content Include="Views\Movie\Create.cshtml" />
+    <Content Include="Views\Movie\Delete.cshtml" />
+    <Content Include="Views\Movie\Edit.cshtml" />
+    <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Pelicula\Details.cshtml" />
+    <Content Include="Views\Pelicula\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GeneroViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
