@@ -67,6 +67,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\GeneroRepository.cs" />
     <Compile Include="Repositories\PersonaRepository.cs" />
+    <Compile Include="Repositories\SerieRepository.cs" />
     <Compile Include="Repositories\UsuarioRepository.cs" />
     <Compile Include="VideoOnDemandContext.cs" />
   </ItemGroup>
