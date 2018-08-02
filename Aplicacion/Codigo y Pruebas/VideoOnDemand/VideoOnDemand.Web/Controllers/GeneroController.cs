@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VideoOnDemand.Entities;
+using VideoOnDemand.Repositories;
+using VideoOnDemand.Web.Helpers;
+using VideoOnDemand.Web.Models;
 
 namespace VideoOnDemand.Web.Controllers
 {
-    public class GeneroController : Controller
+    public class GeneroController : BaseController
     {
         // GET: Genero
         public ActionResult Index()
         {
-            return View();
+            GeneroRepository repository = new GeneroRepository(context);
+            var lst = repository.GetAll();
+            var models = MapHelper.Map<IEnumerable<GeneroViewModel>>(lst);
+            
+            return View(models);
         }
 
         // GET: Genero/Details/5
@@ -28,39 +36,97 @@ namespace VideoOnDemand.Web.Controllers
 
         // POST: Genero/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(GeneroViewModel model)
         {
             try
             {
                 // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    GeneroRepository repository = new GeneroRepository(context);
 
-                return RedirectToAction("Index");
+                    #region validaciones
+                    var generoQry = new Genero {Nombre = model.Nombre };
+                    bool existeGenero = repository.QueryByExample(generoQry).Count > 0;
+
+                    if (existeGenero)
+                    {
+                        ModelState.AddModelError("Nombre", "El nombre ya existe.");
+                        return View(model);
+                    }
+                    #endregion
+
+                    Genero genero = MapHelper.Map<Genero>(model);
+                    repository.Insert(genero);
+
+                    context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
         }
 
-        // GET: Genero/Edit/5
+
+        // GET: Topic/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            GeneroRepository repository = new GeneroRepository(context);
+
+            var genero = repository.Query(t => t.Id == id).First();
+
+            var model = MapHelper.Map<GeneroViewModel>(genero);
+
+            return View(model);
         }
 
-        // POST: Genero/Edit/5
+        // POST: Topic/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, GeneroViewModel model)
         {
             try
             {
                 // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    GeneroRepository repository = new GeneroRepository(context);
 
-                return RedirectToAction("Index");
+                    #region Validaciones
+                    // Consulto los generos con el nombre
+                    bool existeGenero = repository.Query(x => x.Nombre == model.Nombre && x.Id != model.Id)
+                        .Count > 0;
+
+                    if (existeGenero)
+                    {
+                        ModelState.AddModelError("Nombre", "El nombre del genero ya existe.");
+                        return View(model);
+                    }
+                    #endregion
+
+                    // Variable auxiliar que sirve de mapeo de GeneroViewModel a Genero
+                    Genero genero = MapHelper.Map<Genero>(model);
+
+                    // Se modifica el valor.
+                    repository.Update(genero);
+
+                    // Guardar y registrar cambios.
+                    context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
         }
 
