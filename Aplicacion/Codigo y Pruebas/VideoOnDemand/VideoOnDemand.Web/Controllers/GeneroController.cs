@@ -130,20 +130,29 @@ namespace VideoOnDemand.Web.Controllers
             }
         }
 
-        // GET: Genero/Delete/5
+        // GET: Topic/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            GeneroRepository repository = new GeneroRepository(context);
+            var topic = repository.Query(t => t.Id == id).First();
+            var model = MapHelper.Map<GeneroViewModel>(topic);
+
+            return View(model);
         }
 
-        // POST: Genero/Delete/5
+        // POST: Topic/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, GeneroViewModel model)
         {
             try
             {
                 // TODO: Add delete logic here
+                GeneroRepository repository = new GeneroRepository(context);
 
+                Genero topic = MapHelper.Map<Genero>(model);
+
+                repository.Delete(topic);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch

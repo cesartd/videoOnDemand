@@ -16,5 +16,7 @@ namespace VideoOnDemand.Web.Models
         [MaxLength(1000)]
         public string Descripcion { get; set; }
 
+        public bool? Activo { get; set; }
+
     }
 }

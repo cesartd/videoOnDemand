@@ -5,11 +5,20 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Personas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar Nuevo", "Create")
 </p>
+@using (Html.BeginForm("Index", "Persona", FormMethod.Get))
+{
+    <p>
+        Nombre: <input type="text" name="Search">
+        <input type="submit" value="Buscar" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -36,9 +45,9 @@
             @Html.DisplayFor(modelItem => item.FechaNacimiento)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
            
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
