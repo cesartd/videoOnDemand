@@ -1,23 +1,26 @@
-﻿@model IEnumerable<VideoOnDemand.Web.Models.MovieViewModel>
+﻿@model IEnumerable<VideoOnDemand.Web.Models.EpisodioViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "EpisodesIndex";
 }
 
-<h2>Películas</h2>
+<h2>Episodios</h2>
 
-<form class="form-inline md-form mr-auto mb-4">
-    <input class="form-control mr-sm-2" type="text" placeholder="Nombre de la Película" aria-label="Search" name="Search">
-    <button class="btn btn-elegant btn-rounded btn-sm my-0" type="submit" value="Buscar">Buscar</button>
-</form>
-<br>
+<p>
+    @Html.ActionLink("Agregar Episodios", "CreateEpisodes", new { id = ViewBag.SerieId })
+</p>
 
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
+
         <th>
+            @Html.DisplayNameFor(model => model.Temporada)
+        </th>
+        
+        @*<th>
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
@@ -29,6 +32,9 @@
         <th>
             @Html.DisplayNameFor(model => model.FechaDeLanzamiento)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estatus)
+        </th>*@
         <th></th>
     </tr>
 
@@ -37,7 +43,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
+
         <td>
+            @Html.DisplayFor(modelItem => item.Temporada)
+        </td>
+        
+        @*<td>
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
@@ -50,9 +61,18 @@
             @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
         </td>
         <td>
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) 
+            @Html.DisplayFor(modelItem => item.Estatus)
+        </td>*@
+        <td>
+            @Html.ActionLink("Editar", "EditEpisode", new { id=item.Id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
 
+
 </table>
+
+<div>
+    @Html.ActionLink("Regresar", "Index", new { id = ViewBag.SerieId})
+</div>

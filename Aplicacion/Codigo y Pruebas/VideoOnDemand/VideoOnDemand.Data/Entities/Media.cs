@@ -13,6 +13,8 @@ namespace VideoOnDemand.Entities
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int? DuracionMin { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? FechaDeRegistro { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

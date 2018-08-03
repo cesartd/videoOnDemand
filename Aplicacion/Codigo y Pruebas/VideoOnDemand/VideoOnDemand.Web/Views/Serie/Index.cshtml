@@ -14,7 +14,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
@@ -22,13 +22,13 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FechaDeRegistro)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.FechaDeLanzamiento)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Estatus)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -37,7 +37,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
@@ -45,17 +45,17 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FechaDeRegistro)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Estatus)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Eliminar", "Delete", new { id=item.Id }) |
-            @Html.ActionLink("Episodios", "Delete", new { id=item.Id })
+            @Html.ActionLink("Episodios", "EpisodesIndex", new { id=item.Id })
         </td>
     </tr>
 }
