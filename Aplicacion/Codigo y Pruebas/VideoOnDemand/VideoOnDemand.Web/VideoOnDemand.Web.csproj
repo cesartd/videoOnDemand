@@ -704,6 +704,9 @@
     <Content Include="Views\Movie\Index.cshtml" />
     <Content Include="Views\Pelicula\Details.cshtml" />
     <Content Include="Views\Pelicula\Index.cshtml" />
+    <Content Include="Views\Serie\CreateEpisodes.cshtml" />
+    <Content Include="Views\Serie\EditEpisode.cshtml" />
+    <Content Include="Views\Serie\EpisodesIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

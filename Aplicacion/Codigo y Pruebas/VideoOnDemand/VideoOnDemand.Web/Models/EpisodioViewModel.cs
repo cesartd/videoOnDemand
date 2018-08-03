@@ -16,6 +16,8 @@ namespace VideoOnDemand.Web.Models
         public DateTime? FechaDeRegistro { get; set; }
         public DateTime? FechaDeLanzamiento { get; set; }
 
+        public int? SerieId { get; set; }
+
         public int? Estatus { get; set; }
         /*public ICollection<GeneroViewModel> Generos { get; set; }
         public ICollection<PersonaViewModel> Actores { get; set; }*/
