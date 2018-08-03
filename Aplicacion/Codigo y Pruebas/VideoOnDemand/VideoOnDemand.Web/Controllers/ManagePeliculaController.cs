@@ -20,10 +20,12 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Index()
         {
             MovieRepository repository = new MovieRepository(context);
-
             var list = repository.GetAll();
             var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
-            return View(models);
+
+            var MovieQry = models.Where(m=>m.Estatus.Equals(EEstatusMedia.VISIBLE||EEstatusMedia.INVISIBLE));
+
+            return View(MovieQry);
         }
 
         // GET: Movie/Details/5
@@ -35,13 +37,30 @@ namespace VideoOnDemand.Web.Controllers
         // GET: Movie/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new MovieViewModel();
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var lst = generoRepository.GetAll();
+            model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
+
+            PersonaRepository personaRepository = new PersonaRepository(context);
+            var lst2 = personaRepository.GetAll();
+            model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst2);
+
+            return View(model);
         }
 
         // POST: Movie/Create
         [HttpPost]
         public ActionResult Create(MovieViewModel model)
         {
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var lst = generoRepository.GetAll();
+            model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
+
+            PersonaRepository personaRepository = new PersonaRepository(context);
+            var lst2 = personaRepository.GetAll();
+            model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst2);
+
             try
             {
                 if (ModelState.IsValid)
@@ -52,7 +71,7 @@ namespace VideoOnDemand.Web.Controllers
                     #region validaciones
                     //validar nombre unico
                     var MovieQry = new Movie { Nombre = model.Nombre };
-                    //consulto los temas con el nombre y valido si existe un elemento 
+                    //consulto las movies con el nombre y valido si existe un elemento 
                     bool existeMovie = repository.QueryByExample(MovieQry).Count > 0;
                     if (existeMovie)
                     {
@@ -61,9 +80,10 @@ namespace VideoOnDemand.Web.Controllers
                     }
                     #endregion
 
-                    //mapear el modelo de vista a una entidad topic
+                    //mapear el modelo de vista a una entidad movie
                     Movie movie = MapHelper.Map<Movie>(model);
                     movie.FechaDeRegistro = DateTime.Now;
+                    movie.Estatus = EEstatusMedia.VISIBLE;
                     repository.Insert(movie);
                     context.SaveChanges();
                 }
@@ -101,7 +121,7 @@ namespace VideoOnDemand.Web.Controllers
                     #region validaciones
                     //validar nombre unico
                     var movieQry = new Movie { Nombre = model.Nombre };
-                    //consulto los temas con el nombre y valido si existe un elemento 
+                    //consulto las movceis con el nombre y valido si existe un elemento 
                     bool existeMovie = repository.Query(x => x.Nombre == model.Nombre && x.Id != model.Id).Count > 0;
                     if (existeMovie)
                     {
@@ -110,7 +130,7 @@ namespace VideoOnDemand.Web.Controllers
                     }
                     #endregion
 
-                    //mapear el modelo de vista a una entidad topic
+                    //mapear el modelo de vista a una entidad movie
                     Movie movie = MapHelper.Map<Movie>(model);
                     repository.Update(movie);
                     context.SaveChanges();
@@ -138,11 +158,13 @@ namespace VideoOnDemand.Web.Controllers
         {
             try
             {
-                MovieRepository repository = new MovieRepository(context);
-                Movie movie = MapHelper.Map<Movie>(model);
-                repository.Delete(movie);
-                context.SaveChanges();
+                
 
+                MovieRepository repository = new MovieRepository(context);
+                var pelicula = repository.Query(e => e.Id == id).First();
+                pelicula.Estatus = EEstatusMedia.ELIMINADO;
+                repository.Update(pelicula);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch

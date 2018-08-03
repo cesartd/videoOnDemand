@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.Data;
+using VideoOnDemand.Entities;
 using VideoOnDemand.Repositories;
 using VideoOnDemand.Web.Helpers;
 using VideoOnDemand.Web.Models;
@@ -20,7 +21,10 @@ namespace VideoOnDemand.Web.Controllers
 
             var list = repository.GetAll();
             var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
-            return View(models);
+
+            var MovieQry = models.Where(m => m.Estatus.Equals(EEstatusMedia.VISIBLE));
+
+            return View(MovieQry);
         }
 
         // GET: Pelicula/Details/5

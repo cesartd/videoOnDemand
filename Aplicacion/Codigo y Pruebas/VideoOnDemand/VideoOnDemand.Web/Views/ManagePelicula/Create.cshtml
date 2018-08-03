@@ -46,27 +46,64 @@
                 @Html.ValidationMessageFor(model => model.FechaDeLanzamiento, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <div>
+            <label>Generos</label>
+            @foreach (var item in Model.GenerosDisponibles)
+            {
+                var seleccionado = "";
+                //activar el checkbox si de los generos disponbles existe en los temas seleccionados
 
-        <div class="form-group">
-            @Html.Label("Generos", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-10">
-                
-            </div>
+                if (Model.GenerosSeleccionados != null)
+                {
+                    if (Model.GenerosSeleccionados.Contains(item.Id.Value))
+                    {
+                        seleccionado = "checked";
+                    }
+                }
+
+                <div class="checkbox">
+                    <label>
+                        <input name="GeneroSeleccionado" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
+                    </label>
+                </div>
+
+            }
         </div>
 
-        <div class="form-group">
-            @Html.Label("Actores", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-10">
+        <div>
+            <label>Actores</label>
+            @foreach (var item in Model.ActoresDisponibles)
+            {
+                var seleccionado = "";
+                //activar el checkbox si de los actores disponbles existe en los temas seleccionados
 
-            </div>
+                if (Model.ActoresSeleccionados != null)
+                {
+                    if (Model.ActoresSeleccionados.Contains(item.Id.Value))
+                    {
+                        seleccionado = "checked";
+                    }
+                }
+
+                <div class="checkbox">
+                    <label>
+                        <input name="ActorSeleccionado" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
+                    </label>
+                </div>
+
+            }
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
-        </div>
+        </div>        
+
     </div>
+    
+
 }
 
 <div>

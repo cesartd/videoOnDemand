@@ -8,7 +8,7 @@ namespace VideoOnDemand.Repositories
     {
         public MovieRepository(VideoOnDemandContext context) : base(context)
         {
-
         }
+
     }
 }
