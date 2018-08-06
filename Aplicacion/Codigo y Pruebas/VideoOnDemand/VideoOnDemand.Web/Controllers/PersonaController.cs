@@ -17,7 +17,7 @@ namespace VideoOnDemand.Web.Controllers
         // GET: Persona
         public ActionResult Index(string Search)
         {
-            PersonaRepository repository = new PersonaRepository(context); //Se agrega esto
+            PersonaRepository repository = new PersonaRepository(context); 
             Persona persona = new Persona();
             persona.Nombre = Search;
 
@@ -32,7 +32,9 @@ namespace VideoOnDemand.Web.Controllers
 
                 list = repository.GetAll().ToList();
             }
-            var models = MapHelper.Map<IEnumerable<PersonaViewModel>>(list); //Se agrega esto
+            var models = MapHelper.Map<IEnumerable<PersonaViewModel>>(list); 
+            //_________________________-
+           
             return View(models); //Retorna a models
           
         }
@@ -170,9 +172,7 @@ namespace VideoOnDemand.Web.Controllers
             {
                 // TODO: Add delete logic here
                 PersonaRepository repository = new PersonaRepository(context);
-
                 Persona persona = MapHelper.Map<Persona>(model);
-
                 repository.Delete(persona);
                 context.SaveChanges();
                 return RedirectToAction("Index");
