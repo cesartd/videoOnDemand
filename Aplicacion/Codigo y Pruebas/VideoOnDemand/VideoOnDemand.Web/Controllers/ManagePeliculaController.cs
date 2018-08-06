@@ -23,7 +23,7 @@ namespace VideoOnDemand.Web.Controllers
             var list = repository.GetAll();
             var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
 
-            var MovieQry = models.Where(m=>m.Estatus.Equals(EEstatusMedia.VISIBLE||EEstatusMedia.INVISIBLE));
+            var MovieQry = models.Where(m=>m.Estatus.Equals(EEstatusMedia.VISIBLE));
 
             return View(MovieQry);
         }
@@ -159,7 +159,6 @@ namespace VideoOnDemand.Web.Controllers
             try
             {
                 
-
                 MovieRepository repository = new MovieRepository(context);
                 var pelicula = repository.Query(e => e.Id == id).First();
                 pelicula.Estatus = EEstatusMedia.ELIMINADO;
