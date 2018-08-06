@@ -4,49 +4,55 @@
     ViewBag.Title = "Index";
 }
 
+<style>
+    table#movie {
+        width:200px;
+        height:350px;
+        float:left;
+    }
+</style>
+
 <h2>Películas</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DuracionMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaDeRegistro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaDeLanzamiento)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DuracionMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaDeRegistro)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
-        </td>
-        <td>
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) 
-        </td>
-    </tr>
-}
+<form class="form-inline md-form mr-auto mb-4">
+    <input class="form-control mr-sm-2" type="text" placeholder="Nombre de la Película" aria-label="Search" name="Search">
+    <button class="btn btn-elegant btn-rounded btn-sm my-0" type="submit" value="Buscar">Buscar</button>
+</form>
 
-</table>
+<br>
+<div>
+    @foreach (var item in Model)
+    {
+        <div>
+            <table id="pelicula" border="1">
+                <tr>
+                    <th colspan="2">
+                        <a>@Html.DisplayFor(modelItem => item.Nombre)</a>
+                        <div>
+                            <h5 class="card-title">
+                                @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
+                                Duracion: @Html.DisplayFor(modelItem => item.DuracionMin) minutos.
+                        </h5>
+                    </div>
+                    <h5 class="card-title">Genero: @Html.DisplayFor(modelItem => item.Generos)</h5>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <div>Descripcion:</div>
+                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.Descripcion)</h6>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("+Mi lista", "AddToList", new { id = item.Id }) 
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id })
+                </td>
+            </tr>
+        </table>
+    </div>
+    }
+</div>

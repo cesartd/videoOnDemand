@@ -1,0 +1,33 @@
+﻿@model IEnumerable<VideoOnDemand.Web.Models.SerieViewModel>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h1>Series</h1>
+<meta charset="utf-8">
+
+<p>
+	<div class="form-group">
+		<label for="usr">Search:</label>
+		<input type="text" class="form-control" id="usr">
+	</div>
+</p>
+<div class="container">
+	<div class="row">
+@foreach (var item in Model)
+{		<div class="col-md-4">
+		<div class="card" style="width:400px;border:groove; background-color : darkcyan">
+			<div class="card-body">
+				<h3 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h3>
+				<h4 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h4>
+				<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
+				<a href="#" class="btn btn-primary pull-right btn-xs">See Profile</a>
+				<a href="#" class="btn btn-primary pull-left btn-xs">See Profile</a>
+			</div>
+		</div>
+		</div>
+}
+	</div>
+	</div>
+

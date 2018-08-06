@@ -6,9 +6,18 @@
 
 <h2>Administrar Películas</h2>
 
+<form class="form-inline md-form mr-auto mb-4">
+    <input class="form-control mr-sm-2" type="text" placeholder="Nombre de la Película" aria-label="Search" name="Search">
+    <button class="btn btn-elegant btn-rounded btn-sm my-0" type="submit" value="Buscar">Buscar</button>
+</form>
+<br>
+
 <p>
     @Html.ActionLink("Crear nueva película", "Create")
 </p>
+
+
+
 <table class="table">
     <tr>
         <th>
