@@ -5,7 +5,6 @@
 }
 
 <h1>Series</h1>
-<meta charset="utf-8">
 
 <p>
 	<div class="form-group">
@@ -15,21 +14,21 @@
 </p>
 <div class="container">
 	<div class="row">
-@foreach (var item in Model)
-{		<div class="col-md-4">
-		<div class="card" style="width:400px;border:groove; background-color : darkcyan">
-			<div class="card-body">
-				<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
-				<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
-				<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-
-                <a href="#" class="btn btn-primary">+ Mi lista</a> 
-
-				<a href="/Serie/Edit/@item.Id" class="btn btn-primary">Detalles</a>
+		@foreach (var item in Model)
+		{<div class="col-md-4">
+				<div class="panel" style="border:groove; background-color : antiquewhite;min-height:250px">
+					<div class="panel text-center">
+						<div class="panel-body">
+							<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
+							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
+							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
+							<a href="#" class="btn btn-primary">+ Mi Lista</a>
+							<a href="#" class="btn btn-primary">Detalles</a>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		</div>
-}
+		}
 	</div>
-	</div>
+</div>
 
