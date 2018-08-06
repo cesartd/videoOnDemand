@@ -22,8 +22,10 @@
 				<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
 				<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
 				<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-				<a href="#" class="card-link">+ Mi Lista</a>
-				<a href="#" class="card-link">Detalles</a>
+
+                <a href="#" class="btn btn-primary">+ Mi lista</a> 
+
+				<a href="/Serie/Edit/@item.Id" class="btn btn-primary">Detalles</a>
 			</div>
 		</div>
 		</div>
