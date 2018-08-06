@@ -35,7 +35,6 @@ namespace VideoOnDemand.Web.Controllers
             var model = MapHelper.Map<MovieViewModel>(topic);
             return View(model);
         }
-
-        
+       
     }
 }
