@@ -25,17 +25,18 @@
     @foreach (var item in Model)
     {
         <div>
-            <table id="pelicula" border="1">
+            <table id="movie" border="1">
                 <tr>
                     <th colspan="2">
-                        <a>@Html.DisplayFor(modelItem => item.Nombre)</a>
-                        <div>
+                            <a>@Html.DisplayFor(modelItem => item.Nombre)</a>
+                            <div>
                             <h5 class="card-title">
                                 @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
                                 Duracion: @Html.DisplayFor(modelItem => item.DuracionMin) minutos.
                         </h5>
                     </div>
-                    <h5 class="card-title">Genero: @Html.DisplayFor(modelItem => item.Generos)</h5>
+                    <h5 class="card-title">Genero: @Html.DisplayFor(genere => item.GenerosSeleccionados)</h5>
+                    
                 </th>
             </tr>
             <tr>

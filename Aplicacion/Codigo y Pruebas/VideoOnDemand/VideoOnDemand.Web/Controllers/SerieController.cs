@@ -18,7 +18,7 @@ namespace VideoOnDemand.Web.Controllers
         {
             SerieRepository repository = new SerieRepository(context);
             //consulte los individuos del repositorio
-            var lst = repository.GetAll();
+            var lst = repository.Query(n => n.Estatus == EEstatusMedia.VISIBLE);
 
             //mapeamos la lista de individuos con una lista de IndividualViewModel
             var models = MapHelper.Map<IEnumerable<SerieViewModel>>(lst);
@@ -63,6 +63,10 @@ namespace VideoOnDemand.Web.Controllers
 
                     //mapear el modelo de vista a una entidad topic
                     Serie serie = MapHelper.Map<Serie>(model);
+                    serie.FechaDeRegistro = DateTime.Now;
+                    serie.DuracionMin = 0;
+                    serie.Estatus = EEstatusMedia.VISIBLE;
+
                     repository.Insert(serie);
                     context.SaveChanges();
                 }
@@ -140,8 +144,9 @@ namespace VideoOnDemand.Web.Controllers
             try
             {
                 SerieRepository repository = new SerieRepository(context);
-                Serie serie = MapHelper.Map<Serie>(model);
-                repository.Delete(serie);
+                var serie = repository.Query(n => n.Id == id).First();
+                serie.Estatus = EEstatusMedia.ELIMINADO;
+                repository.Update(serie);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -160,7 +165,7 @@ namespace VideoOnDemand.Web.Controllers
             EpisodioRepository repository = new EpisodioRepository(context);
             //consulte los episodios del repositorio
 
-            var lst = repository.Query(t => t.SerieId == id);
+            var lst = repository.Query(t => t.SerieId == id && t.Estatus == EEstatusMedia.VISIBLE);
 
             ViewBag.SerieId = id;
 
@@ -208,6 +213,8 @@ namespace VideoOnDemand.Web.Controllers
                     //mapear el modelo de vista a una entidad episodio
                     Episodio episodio = MapHelper.Map<Episodio>(model);
                     episodio.Serie = repository2.Query(t => t.Id == episodio.SerieId).First();
+                    episodio.FechaDeRegistro = DateTime.Now;
+                    episodio.Estatus = EEstatusMedia.VISIBLE;
                     repository.Insert(episodio);
                     context.SaveChanges();
 
@@ -228,6 +235,7 @@ namespace VideoOnDemand.Web.Controllers
         {
             EpisodioRepository repo = new EpisodioRepository(context);
             var episode = repo.Query(t => t.Id == id).First();
+            
             var model = MapHelper.Map<EpisodioViewModel>(episode);
 
             return View(model);
@@ -263,7 +271,7 @@ namespace VideoOnDemand.Web.Controllers
                     repository.Update(serie);
                     context.SaveChanges();
                 }
-                return RedirectToAction("EpisodesIndex");
+                return RedirectToAction("EpisodesIndex", new { Id = model.SerieId });
             }
 
             catch (Exception ex)
@@ -273,6 +281,34 @@ namespace VideoOnDemand.Web.Controllers
             }
         }
 
+        // GET: Serie/EpisodesIndex/DeleteEpisode/5
+        public ActionResult DeleteEpisode(int id)
+        {
+            EpisodioRepository repository = new EpisodioRepository(context);
+            var episodio = repository.Query(t => t.Id == id).First();
+            var model = MapHelper.Map<EpisodioViewModel>(episodio);
+            return View(model);
+        }
+
+        // POST: Serie/EpisodesIndex/DeleteEpisode/5
+        [HttpPost]
+        public ActionResult DeleteEpisode(int id, EpisodioViewModel model)
+        {
+            try
+            {
+                EpisodioRepository repository = new EpisodioRepository(context);
+                var episodio = repository.Query(n => n.Id == id).First();
+                episodio.Estatus = EEstatusMedia.ELIMINADO;
+
+                repository.Update(episodio);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         #endregion
     }

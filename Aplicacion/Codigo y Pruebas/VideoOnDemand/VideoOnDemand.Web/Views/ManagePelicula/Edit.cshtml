@@ -63,6 +63,53 @@
                 @Html.ValidationMessageFor(model => model.Estatus, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="panel-body">
+            <label>Genero</label>
+            @foreach (var item in Model.GenerosDisponibles)
+            {
+                var seleccionado = "";
+
+                //activar el checkbox si de los temas disponibles
+                //existe en los temas seleccionados
+                if (Model.GenerosSeleccionados != null)
+                {
+                    if (Model.GenerosSeleccionados.Contains(item.Id.Value))
+                    {
+                        seleccionado = "checked";
+                    }
+                }
+
+                    <div class="checkbox">
+                        <label>
+                            <input name="GenerosSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado> @item.Nombre
+                        </label>
+                    </div>
+            }
+        </div>
+
+        <div class="panel-body">
+            <label>Actor</label>
+            @foreach (var item in Model.ActoresDisponibles)
+                {
+                    var seleccionado = "";
+
+                    //activar el checkbox si de los temas disponibles
+                    //existe en los temas seleccionados
+                    if (Model.ActoresSeleccionados != null)
+                    {
+                        if (Model.ActoresSeleccionados.Contains(item.Id.Value))
+                        {
+                            seleccionado = "checked";
+                        }   
+                    }
+
+                    <div class="checkbox">
+                        <label>
+                            <input name="ActoresSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado> @item.Nombre
+                        </label>
+                    </div>
+            }
+        </div>
 
         
 
