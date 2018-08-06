@@ -20,6 +20,7 @@ namespace VideoOnDemand.Data
         public DbSet<Media> Medias { get; set; }
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Serie> Series { get; set; }
+        public DbSet<Movie> Peliculas { get; set; }
         public DbSet<Persona> Actores { get; set; }
         public DbSet<Opinion> Opiniones { get; set; }
         public DbSet<Favorito> Favoritos { get; set; }
@@ -35,6 +36,7 @@ namespace VideoOnDemand.Data
             var mediaEntity = modelBuilder.Entity<Media>();
             var generoEntity = modelBuilder.Entity<Genero>();
             var serieEntity = modelBuilder.Entity<Serie>();
+            var peliculaEntity = modelBuilder.Entity<Movie>();
             var personaEntity = modelBuilder.Entity<Persona>();
             var opinionEntity = modelBuilder.Entity<Opinion>();
             var favoritoEntity = modelBuilder.Entity<Favorito>();
@@ -52,7 +54,7 @@ namespace VideoOnDemand.Data
 
 
             #region TPT movie, serie y episodio
-            modelBuilder.Entity<Movie>().ToTable("Movie");
+            peliculaEntity.ToTable("Movie");
             modelBuilder.Entity<Episodio>().ToTable("Episodio");
             serieEntity.ToTable("Serie");
             #endregion
