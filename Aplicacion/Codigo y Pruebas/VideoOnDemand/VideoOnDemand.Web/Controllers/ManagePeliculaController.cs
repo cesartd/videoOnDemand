@@ -18,13 +18,28 @@ namespace VideoOnDemand.Web.Controllers
         VideoOnDemandContext context = new VideoOnDemandContext();
 
         // GET: Movie
-        public ActionResult Index()
+        public ActionResult Index(string Search)
         {
-            MovieRepository repository = new MovieRepository(context);
-            var list = repository.GetAll();
-            var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
+            MovieRepository repository = new MovieRepository(context);            
 
-            var MovieQry = models.Where(m=>m.Estatus.Equals(EEstatusMedia.VISIBLE));
+            Movie movie = new Movie();
+            movie.Nombre = Search;
+
+            ICollection<Movie> list = null;
+
+            if (!String.IsNullOrEmpty(Search))
+            {
+                list = repository.QueryByExample(movie);
+
+            }
+            else
+            {
+
+                list = repository.GetAll().ToList();
+            }
+
+            var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
+            var MovieQry = models.Where(m=>m.Estatus!=EEstatusMedia.ELIMINADO);
 
             return View(MovieQry);
         }
