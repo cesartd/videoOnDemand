@@ -206,7 +206,6 @@ namespace VideoOnDemand.Web.Controllers
             try
             {
                 
-
                 MovieRepository repository = new MovieRepository(context);
                 var pelicula = repository.Query(e => e.Id == id).First();
                 pelicula.Estatus = EEstatusMedia.ELIMINADO;

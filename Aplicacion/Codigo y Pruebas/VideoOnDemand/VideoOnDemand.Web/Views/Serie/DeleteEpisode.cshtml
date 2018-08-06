@@ -1,0 +1,72 @@
+﻿@model VideoOnDemand.Web.Models.EpisodioViewModel
+
+@{
+    ViewBag.Title = "DeleteEpisode";
+}
+
+<h2>DeleteEpisode</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EpisodioViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Temporada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Temporada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DuracionMin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DuracionMin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaDeRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaDeRegistro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaDeLanzamiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaDeLanzamiento)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "EpisodesIndex", new { id = Model.SerieId })
+        </div>
+    }
+</div>
