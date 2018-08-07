@@ -21,39 +21,22 @@
 </form>
 
 <br>
-<div>
-    @foreach (var item in Model)
-    {
-        <div>
-            <table id="movie" border="1">
-                <tr>
-                    <th colspan="2">
-                            <a>@Html.DisplayFor(modelItem => item.Nombre)</a>
-                            <div>
-                            <h5 class="card-title">
-                                @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
-                                Duracion: @Html.DisplayFor(modelItem => item.DuracionMin) minutos.
-                        </h5>
-                    </div>
-                    <h5 class="card-title">Genero: @Html.DisplayFor(genere => item.GenerosSeleccionados)</h5>
-                    
-                </th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    <div>Descripcion:</div>
-                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.Descripcion)</h6>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("+Mi lista", "AddToList", new { id = item.Id }) 
-                </td>
-                <td>
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id })
-                </td>
-            </tr>
-        </table>
-    </div>
-    }
+<div class="container">
+	<div class="row">
+		@foreach (var item in Model)
+		{<div class="col-md-4">
+				<div class="panel" style="border:groove; background-color : antiquewhite;min-height:250px">
+					<div class="panel text-center">
+						<div class="panel-body">
+							<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
+							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
+							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
+							<a href="#" class="btn btn-primary">+ Mi Lista</a>
+							<a href="#" class="btn btn-primary">Detalles</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
 </div>

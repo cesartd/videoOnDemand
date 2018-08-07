@@ -26,7 +26,7 @@ namespace VideoOnDemand.Data
         public DbSet<Favorito> Favoritos { get; set; }
         public DbSet<MediaOnPlay> MediasOnPlay { get; set; }
 
-        //public DbSet<Episodio> Episodios { get; set; }
+        public DbSet<Episodio> Episodios { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

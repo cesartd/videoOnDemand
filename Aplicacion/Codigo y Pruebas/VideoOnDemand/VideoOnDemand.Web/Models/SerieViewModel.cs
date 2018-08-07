@@ -23,7 +23,10 @@ namespace VideoOnDemand.Web.Models
         public DateTime? FechaDeLanzamiento { get; set; }
 
         public int? Estatus { get; set; }
-        public ICollection<GeneroViewModel> Generos { get; set; }
-        /*public ICollection<PersonaViewModel> Actores { get; set; }*/
+        public ICollection<GeneroViewModel> GenerosDisponibles { get; set; }
+        public int[] GenerosSeleccionados { get; set; }
+        public ICollection<PersonaViewModel> ActoresDisponibles { get; set; }
+        //mantiene los generos que seleccione el usuario
+        public int[] ActoresSeleccionados { get; set; }
     }
 }
