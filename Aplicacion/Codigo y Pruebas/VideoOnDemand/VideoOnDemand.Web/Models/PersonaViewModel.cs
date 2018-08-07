@@ -16,6 +16,8 @@ namespace VideoOnDemand.Web.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? FechaNacimiento { get; set; }
+
+        public bool? Activo { get; set; }
         
     }
 }

@@ -19,6 +19,7 @@ namespace VideoOnDemand.Web.Controllers
         {
             PersonaRepository repository = new PersonaRepository(context); 
             Persona persona = new Persona();
+            persona.Activo = true;
             persona.Nombre = Search;
 
             ICollection<Persona> list = null;
@@ -30,7 +31,7 @@ namespace VideoOnDemand.Web.Controllers
             }
             else {
 
-                list = repository.GetAll().ToList();
+                list = repository.Query(n => n.Activo == true).ToList();
             }
             var models = MapHelper.Map<IEnumerable<PersonaViewModel>>(list); 
             //_________________________-
@@ -78,7 +79,7 @@ namespace VideoOnDemand.Web.Controllers
 
                     // Variable auxiliar que sirve de mapeo de TopicViewModel a Topic
                     Persona persona = MapHelper.Map<Persona>(model);
-
+                    persona.Activo = true;
                     // Se inserta el valor.
                     repository.Insert(persona);
 
@@ -172,8 +173,10 @@ namespace VideoOnDemand.Web.Controllers
             {
                 // TODO: Add delete logic here
                 PersonaRepository repository = new PersonaRepository(context);
-                Persona persona = MapHelper.Map<Persona>(model);
-                repository.Delete(persona);
+                var persona = repository.Query(n => n.Id == id).First();
+                persona.Activo = false;
+
+                repository.Update(persona);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -187,7 +190,7 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Buscador(String Search )
         {
             PersonaRepository repository = new PersonaRepository(context); 
-            var list = repository.GetAll(); 
+            var list = repository.Query(n => n.Activo == true); 
 
             var busqueda = from s in list  select s;
             if (!String.IsNullOrEmpty(Search))
