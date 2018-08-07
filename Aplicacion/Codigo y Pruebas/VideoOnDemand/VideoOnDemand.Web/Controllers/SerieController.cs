@@ -212,7 +212,9 @@ namespace VideoOnDemand.Web.Controllers
 
                     //mapear el modelo de vista a una entidad episodio
                     Episodio episodio = MapHelper.Map<Episodio>(model);
+
                     episodio.Serie = repository2.Query(t => t.Id == episodio.SerieId).First();
+
                     episodio.FechaDeRegistro = DateTime.Now;
                     episodio.Estatus = EEstatusMedia.VISIBLE;
                     repository.Insert(episodio);
@@ -220,7 +222,7 @@ namespace VideoOnDemand.Web.Controllers
 
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("EpisodesIndex", new {ID = model.SerieId});
             }
 
             catch (Exception ex)
@@ -267,11 +269,12 @@ namespace VideoOnDemand.Web.Controllers
                     #endregion
 
                     //mapear el modelo de vista a una entidad topic
-                    Episodio serie = MapHelper.Map<Episodio>(model);
-                    repository.Update(serie);
+                    Episodio episodio = MapHelper.Map<Episodio>(model);
+                    repository.Update(episodio);
                     context.SaveChanges();
                 }
-                return RedirectToAction("EpisodesIndex", new { Id = model.SerieId });
+                //return RedirectToAction("EpisodesIndex", new { ID = model.SerieId });
+                return RedirectToAction("EpisodesIndex", new { ID = model.SerieId });
             }
 
             catch (Exception ex)
@@ -298,14 +301,17 @@ namespace VideoOnDemand.Web.Controllers
             {
                 EpisodioRepository repository = new EpisodioRepository(context);
                 var episodio = repository.Query(n => n.Id == id).First();
+                int? aux = episodio.SerieId;
                 episodio.Estatus = EEstatusMedia.ELIMINADO;
 
                 repository.Update(episodio);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("EpisodesIndex", new { ID = aux});
             }
-            catch
+
+            catch (Exception ex)
             {
+                ModelState.AddModelError(" ", ex.Message);
                 return View();
             }
         }

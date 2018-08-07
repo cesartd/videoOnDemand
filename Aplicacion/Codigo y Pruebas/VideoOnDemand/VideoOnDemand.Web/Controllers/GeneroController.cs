@@ -16,7 +16,8 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Index()
         {
             GeneroRepository repository = new GeneroRepository(context);
-            var lst = repository.GetAll();
+            var lst = repository.Query(n => n.Activo == true);
+
             var models = MapHelper.Map<IEnumerable<GeneroViewModel>>(lst);
             
             return View(models);
@@ -57,6 +58,7 @@ namespace VideoOnDemand.Web.Controllers
                     #endregion
 
                     Genero genero = MapHelper.Map<Genero>(model);
+                    genero.Activo = true;
                     repository.Insert(genero);
 
                     context.SaveChanges();
@@ -149,9 +151,10 @@ namespace VideoOnDemand.Web.Controllers
                 // TODO: Add delete logic here
                 GeneroRepository repository = new GeneroRepository(context);
 
-                Genero topic = MapHelper.Map<Genero>(model);
-
-                repository.Delete(topic);
+                var topic = repository.Query(n => n.Id == id).First();
+                topic.Activo = false;
+                                
+                repository.Update(topic);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -4,7 +4,7 @@
     ViewBag.Title = "EditEpisode";
 }
 
-<h2>EditEpisode</h2>
+<h2>Editar Episodio</h2>
 
 
 @using (Html.BeginForm())
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.SerieId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SerieId, new { htmlAttributes = new { @class = "form-control" } })
@@ -80,7 +80,7 @@
                 @Html.EditorFor(model => model.Estatus, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Estatus, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -91,7 +91,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "EpisodesIndex", new { id = Model.SerieId})
+    @Html.ActionLink("Regresar", "EpisodesIndex", new { id = Model.SerieId })
 </div>
 
 @section Scripts {
