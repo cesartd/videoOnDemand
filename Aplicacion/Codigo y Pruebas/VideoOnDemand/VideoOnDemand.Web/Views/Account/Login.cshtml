@@ -1,61 +1,109 @@
 ﻿@using VideoOnDemand.Web.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Acceder";
+    ViewBag.Title = " ";
 }
+<style>
+    body {
+    background-color:#222222;
+    color:white;
+    }
+    .header {
+     background-image: linear-gradient(to right, #000 40%, transparent 58%), url('https://m.media-amazon.com/images/G/33/digital/video/merch/mlp1test._CB1198675309_SY1200_FMJPG_.jpg');
+     background-position: right top;
+     width:100%;
+     height:600px;
+    }
+    .header-text {
+    padding:20px;
+    box-sizing:border-box;
+    float:left;
+    width:50%;
+    clear:both;
+     
+    }
+    .cont {
+    background-image: linear-gradient(to left, #000 40%, transparent 58%), url('https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/AVD12419_MLP_MX_mobile_refresh1440x675._SY1200_FMJPG_.jpg');
+    background-position: left top;
+    height:400px;
+    }
+    .cont-text {
+    float:right;
+    padding:20px;
+    box-sizing:border-box;
+    width:40%;
+    clear:both;
+    }
+ 
+
+</style>
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    <div class="header">
+        <div class="header-text">
+            <h1>Prime-Video ahora está en México</h1>
+            
+            <div class="col-md-8">
+
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                @Html.AntiForgeryToken()
-                <h4>Proporciona los datos de tu cuenta</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                        @Html.AntiForgeryToken()
+                        <h4>Iniciar sesión</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Iniciar sesión" class="btn btn-primary" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Registar nueva cuenta", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Iniciar sesión" class="btn btn-primary" />
+                            </div>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Registar nueva cuenta", "Register")
+                        </p>
+                        @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
                     </p>*@
-            }
-        </section>
+                    }
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+    <div class="cont">
+        <div class="cont-text">
+            <p style="font-size: 36px;">Excelente entretenimiento</p>
+            <p style="font-size:20px">Disfruta de The Grand Tour, series Prime Originals premiadas como The Man in the High Castle y Mozart in the Jungle, así como de películas y series populares, con todos los títulos disponibles para su descarga.</p>
+        </div>
     </div>
+    
 </div>
 
 @section Scripts {
