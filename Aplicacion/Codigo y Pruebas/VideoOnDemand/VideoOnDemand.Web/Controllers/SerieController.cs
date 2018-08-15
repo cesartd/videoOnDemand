@@ -110,7 +110,7 @@ namespace VideoOnDemand.Web.Controllers
 
             var serie = repository.QueryIncluding(x => x.Id == id, includes1).SingleOrDefault();
             serie = repository.QueryIncluding(x => x.Id == id, includes2).SingleOrDefault();
-            var model = MapHelper.Map<MovieViewModel>(serie);
+            var model = MapHelper.Map<SerieViewModel>(serie);
             var genero = generoRepo.Query(null, "Nombre");
             var actor = actorRepo.Query(null, "Nombre");
 
@@ -191,9 +191,20 @@ namespace VideoOnDemand.Web.Controllers
             try
             {
                 SerieRepository repository = new SerieRepository(context);
+                EpisodioRepository repository2 = new EpisodioRepository(context);
+
                 var serie = repository.Query(n => n.Id == id).First();
+                var epi = repository2.Query(n => n.SerieId == id).ToList();
+
                 serie.Estatus = EEstatusMedia.ELIMINADO;
                 repository.Update(serie);
+
+                foreach (var item in epi)
+                {
+                    item.Estatus = EEstatusMedia.ELIMINADO;
+                    repository2.Update(item);
+                }
+
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }

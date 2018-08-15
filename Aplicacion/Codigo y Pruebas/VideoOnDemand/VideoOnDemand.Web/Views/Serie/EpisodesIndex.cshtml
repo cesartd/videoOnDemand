@@ -7,7 +7,7 @@
 <h2>Episodios</h2>
 
 <p>
-    @Html.ActionLink("Agregar Episodios", "CreateEpisodes", new { id = ViewBag.SerieId })
+    @Html.ActionLink("Agregar episodio", "CreateEpisodes", new { id = ViewBag.SerieId })
 </p>
 
 <table class="table">
@@ -74,5 +74,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Regresar", "Index", new { id = ViewBag.SerieId})
+    @Html.ActionLink("Regresar a series", "Index", new { id = ViewBag.SerieId})
 </div>

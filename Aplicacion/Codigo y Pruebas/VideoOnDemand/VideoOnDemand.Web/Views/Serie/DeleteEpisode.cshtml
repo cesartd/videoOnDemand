@@ -4,11 +4,9 @@
     ViewBag.Title = "DeleteEpisode";
 }
 
-<h2>Eliminar Episodio</h2>
+<h2>¿Desea eliminar este registro?</h2>
 
-<h3>¿Desea borrar este episodio?</h3>
 <div>
-    <h4>EpisodioViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -70,7 +68,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Eliminar" class="btn btn-default" /> |
-            @Html.ActionLink("Regresar", "EpisodesIndex", new { id = Model.SerieId })
+            @Html.ActionLink("Regresar a episodios", "EpisodesIndex", new { id = Model.SerieId })
         </div>
     }
 </div>
