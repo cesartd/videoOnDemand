@@ -65,6 +65,7 @@
         </div>
         <div class="panel-body">
             <label>Genero</label>
+            @Html.ValidationMessageFor(model => model.GenerosSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.GenerosDisponibles)
             {
                 var seleccionado = "";
@@ -89,6 +90,7 @@
 
         <div class="panel-body">
             <label>Actor</label>
+            @Html.ValidationMessageFor(model => model.ActoresSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.ActoresDisponibles)
                 {
                     var seleccionado = "";

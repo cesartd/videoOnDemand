@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.Data;
@@ -15,30 +16,68 @@ namespace VideoOnDemand.Web.Controllers
     {
         VideoOnDemandContext context = new VideoOnDemandContext();
         // GET: Pelicula
-        public ActionResult Index(string Search)
+        public ActionResult Index(int page = 1, string Search = null, string genero = null, int pageSize = 3)
         {
+
+
             MovieRepository repository = new MovieRepository(context);
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var includes = new Expression<Func<Movie, object>>[] { m => m.Generos };
 
-            Movie movie = new Movie();
-            movie.Nombre = Search;
+            int paginasTotales;
+            int filasTotales;
 
-            ICollection<Movie> list = null;
+            ICollection<Movie> movies;
 
-            if (!String.IsNullOrEmpty(Search))
-            {
-                list = repository.QueryByExample(movie);
+            movies = repository.QueryPageByNombreAndGeneroIncluding(Search, genero, includes, out paginasTotales, out filasTotales, "Nombre", page -1, pageSize);
 
-            }
-            else
-            {
+            ViewBag.Busqueda = Search;
+            ViewBag.Genero = genero;
+            ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
 
-                list = repository.GetAll().ToList();
-            }
+            var paginador = new PaginatorViewModel<MovieViewModel>();
+            paginador.Page = page;
+            paginador.PageSize = pageSize;
+            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies);
+            paginador.TotalPages = paginasTotales;
+            paginador.TotalRows = filasTotales;
 
-            var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
-            var MovieQry = models.Where(m => m.Estatus.Equals(EEstatusMedia.VISIBLE));
+            return View(paginador);
 
-            return View(MovieQry);
+
+
+
+
+            #region Old
+
+            // var lst = generoRepository.GetAll();
+
+            // Movie movie = new Movie();
+            // movie.Nombre = Search;
+
+            // ICollection<Movie> list = null;
+
+            // if (!String.IsNullOrEmpty(Search))
+            // {
+            //     list = repository.QueryByExample(movie);
+
+            // }
+            // else
+            // {
+
+            //     list = repository.GetAll().ToList();
+            // }
+
+            // var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
+            // var MovieQry = models.Where(m => m.Estatus.Equals(EEstatusMedia.VISIBLE));
+
+
+            //MovieQry.First().GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
+            // return View(MovieQry);
+
+            #endregion
+
+
         }
 
         // GET: Pelicula/Details/5

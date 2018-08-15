@@ -18,30 +18,36 @@ namespace VideoOnDemand.Web.Controllers
         VideoOnDemandContext context = new VideoOnDemandContext();
 
         // GET: Movie
-        public ActionResult Index(string Search)
+        public ActionResult Index(int page = 1, string Search = null, string genero = null, int pageSize = 100)
         {
-            MovieRepository repository = new MovieRepository(context);            
 
-            Movie movie = new Movie();
-            movie.Nombre = Search;
 
-            ICollection<Movie> list = null;
+            MovieRepository repository = new MovieRepository(context);
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var includes = new Expression<Func<Movie, object>>[] { m => m.Generos };
 
-            if (!String.IsNullOrEmpty(Search))
-            {
-                list = repository.QueryByExample(movie);
+            int paginasTotales;
+            int filasTotales;
 
-            }
-            else
-            {
+            ICollection<Movie> movies;
 
-                list = repository.GetAll().ToList();
-            }
+            movies = repository.QueryPageByNombreAndGeneroIncluding(Search, genero, includes, out paginasTotales, out filasTotales, "Nombre", page - 1, pageSize);
 
-            var models = MapHelper.Map<IEnumerable<MovieViewModel>>(list);
-            var MovieQry = models.Where(m=>m.Estatus!=EEstatusMedia.ELIMINADO);
+            ViewBag.Busqueda = Search;
+            ViewBag.Genero = genero;
+            ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
 
-            return View(MovieQry);
+            var paginador = new PaginatorViewModel<MovieViewModel>();
+            paginador.Page = page;
+            paginador.PageSize = pageSize;
+            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies);
+            paginador.TotalPages = paginasTotales;
+            paginador.TotalRows = filasTotales;
+
+            return View(paginador);
+
+
+
         }
 
         // GET: Movie/Details/5

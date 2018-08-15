@@ -1,6 +1,9 @@
-﻿using ltracker.Data.Repositories;
+﻿using AppFramework.Expressions;
+using ltracker.Data.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using VideoOnDemand.Data;
 using VideoOnDemand.Entities;
 
@@ -82,6 +85,44 @@ namespace VideoOnDemand.Repositories
 
         }
 
+        public ICollection<Movie> QueryPageByNombreAndGeneroIncluding(string nombre, string genero, Expression<Func<Movie, object>>[] includes, out int totalPages, out int totalRows, string order, int page = 0, int pageSize = 10)
+        {
+
+            Expression<Func<Movie, bool>> where = s => true;
+            where = where.And(s => s.Estatus == EEstatusMedia.VISIBLE);
+
+            if (!String.IsNullOrEmpty(genero))
+                where = where.And(s => s.Generos.Select(g => g.Nombre).Contains(genero));
+            if (!String.IsNullOrEmpty(nombre))
+                where = where.And(s => s.Nombre.Contains(nombre));
+
+            int paginas;
+            int filas;
+
+            ICollection<Movie> movies = QueryPageIncluding(where, includes, out paginas, out filas, order, page, pageSize);
+
+            totalPages = paginas;
+            totalRows = filas;
+
+            return movies;
+        }
+
+        public ICollection<Movie> QueryNombreAndGenero(string nombre, string genero, Expression<Func<Movie, object>>[] includes)
+        {
+
+            Expression<Func<Movie, bool>> where = s => true;
+            where = where.And(s => s.Estatus != EEstatusMedia.ELIMINADO);
+
+            if (!String.IsNullOrEmpty(genero))
+                where = where.And(s => s.Generos.Select(g => g.Nombre).Contains(genero));
+            if (!String.IsNullOrEmpty(nombre))
+                where = where.And(s => s.Nombre.Contains(nombre));
+            
+
+            ICollection<Movie> movies = QueryIncluding(where, includes , "Nombre" );
+
+            return movies;
+        }
 
 
     }
