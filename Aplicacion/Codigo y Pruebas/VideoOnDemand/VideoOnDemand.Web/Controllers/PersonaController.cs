@@ -116,13 +116,15 @@ namespace VideoOnDemand.Web.Controllers
         [HttpPost]
         public ActionResult Edit(int id, PersonaViewModel model)
         {
+            
+           
             try
             {
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
                     PersonaRepository repository = new PersonaRepository(context);
-
+                    
                     #region Validaciones
                     // Consulto los temas con el nombre
                     bool existePersona = repository.Query(x => x.Nombre == model.Nombre && x.Id != model.Id)
@@ -137,7 +139,7 @@ namespace VideoOnDemand.Web.Controllers
 
                     // Variable auxiliar que sirve de mapeo de TopicViewModel a Topic
                     Persona persona = MapHelper.Map<Persona>(model);
-
+                    persona.Activo = true;
                     // Se modifica el valor.
                     repository.Update(persona);
 

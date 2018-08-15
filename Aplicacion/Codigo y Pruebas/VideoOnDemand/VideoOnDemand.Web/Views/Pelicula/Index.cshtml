@@ -95,8 +95,10 @@
 						<div class="panel-body">
 							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
 							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-							<a href="" class="btn btn-primary">+ Mi Lista</a>
-                            @Html.ActionLink("Detalles", "Details", new { id = item.Id },new { @class= "btn btn-default" })
+
+							<a href="#" class="btn btn-primary">+ Mi Lista</a>
+							@Html.ActionLink("Detalles","Details", new { id=item.Id})
+
 						</div>
 					</div>
 				</div>
