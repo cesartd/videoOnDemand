@@ -21,6 +21,8 @@ namespace VideoOnDemand.Web.Helpers
                 x.CreateMap<Movie, MovieViewModel>().ReverseMap();
                 x.CreateMap<Persona, PersonaViewModel>().ReverseMap();//Se crea el de persona
 
+                x.CreateMap<Serie, SerieActorGeneroViewModel>().ReverseMap();
+
                 x.CreateMap<Episodio, EpisodioViewModel>().ReverseMap();
 
                });

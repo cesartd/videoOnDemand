@@ -1,8 +1,9 @@
-﻿@model IEnumerable<VideoOnDemand.Web.Models.TemporadaViewModel>
+﻿@using VideoOnDemand.Web.Models
+@model IEnumerable<VideoOnDemand.Web.Models.TemporadaViewModel>
 
 
 @{
-    ViewBag.Title = "Details";
+        ViewBag.Title = "Details";
 
 }
 
@@ -36,9 +37,34 @@
         <br />
         <label> <b> Descripcion: </b> @ViewBag.SerieDetalle.Descripcion </label>
         <br />
-        <label> <b> Generos: </b> @ViewBag.SerieDetalle.Descripcion </label>
+
+        <label> <b> Generos: </b>
+        </label>
+     @{
+
+         var coma = ",";
+
+        
+
+         foreach (var item in ViewBag.SerieDetalle.Generos)
+         {
+                   
+            <label> @(item.Nombre) @coma</label>
+
+         }
+    }
+           
         <br />
-        <label> <b> Actores: </b> @ViewBag.SerieDetalle.Descripcion </label>
+
+        <label> <b> Actores: </b></label>
+
+        @{
+            foreach (var item in ViewBag.SerieDetalle.Actores)
+            {
+                <label> @item.Nombre</label>
+            }
+        }
+        
 
     </div>
 

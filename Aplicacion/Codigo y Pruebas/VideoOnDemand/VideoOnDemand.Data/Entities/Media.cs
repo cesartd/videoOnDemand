@@ -14,9 +14,6 @@ namespace VideoOnDemand.Entities
         public string Descripcion { get; set; }
         public int? DuracionMin { get; set; }
         public DateTime? FechaDeRegistro { get; set; }
-
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? FechaDeLanzamiento { get; set; }
 
         public EEstatusMedia? Estatus { get; set; }
