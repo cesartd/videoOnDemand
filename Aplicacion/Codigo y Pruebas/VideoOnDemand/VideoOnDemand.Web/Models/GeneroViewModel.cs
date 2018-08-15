@@ -11,9 +11,9 @@ namespace VideoOnDemand.Web.Models
         public int? Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
         public string Nombre { get; set; }
 
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
         public bool? Activo { get; set; }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Crear nuevo genero</h2>
+<h2>Agregar genero</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>GeneroViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -48,7 +47,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Regresar a generos", "Index")
 </div>
 
 @section Scripts {

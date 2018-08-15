@@ -4,7 +4,7 @@
     ViewBag.Title = "EditEpisode";
 }
 
-<h2>Editar Episodio</h2>
+<h2>Editar episodio</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EpisodioViewModel</h4>
         <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -91,7 +90,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "EpisodesIndex", new { id = Model.SerieId })
+    @Html.ActionLink("Regresar a episodios", "EpisodesIndex", new { id = Model.SerieId })
 </div>
 
 @section Scripts {

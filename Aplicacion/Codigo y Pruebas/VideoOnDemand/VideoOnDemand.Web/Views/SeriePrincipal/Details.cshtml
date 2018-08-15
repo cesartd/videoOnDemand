@@ -1,58 +1,108 @@
-﻿@model IEnumerable<VideoOnDemand.Web.Models.EpisodioViewModel>
+﻿@model IEnumerable<VideoOnDemand.Web.Models.TemporadaViewModel>
+
 
 @{
     ViewBag.Title = "Details";
-    int? num = 0;
+
 }
 
-<h2>Details</h2>
+<style>
+    .tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+</style>
+
+<h2>&nbsp;&nbsp;&nbsp;Detalles</h2>
+<br />
+
+<div class="container" style="height: auto">
+
+    <div class="container float-lg-left" style="width: auto;">
+        <img src="~/robot.jpg" alt="robot" class="img-fluid" />
+    </div>
+
+    <div class="container-fluid" style="width: 500px;">
+
+            <h4>@ViewBag.SerieDetalle.Nombre</h4>
+        <br />
+        <label><b>Temporada:</b></label>
+        <br />
+        <label> <b> Descripcion: </b> @ViewBag.SerieDetalle.Descripcion </label>
 
 
-<ul class="nav nav-tabs">
+    </div>
 
-    @foreach (var item in Model)
-    {
-        if (@num != item.Temporada)
-        {
-            num = item.Temporada;
-            <li class="nav-item"><a class="nav-link disabled" href="#">Temporada @item.Temporada</a></li>
-        }
-    }
-</ul>
+    <div style="clear:both">
 
+    </div>
+</div>
+<br />
+<hr style="height: 1px; color: black"/>
+<br />
+<div class="container-fluid">
+    <ul class="nav nav-tabs">
 
+        @{
+            var active = "active";
 
-        @*<table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
-                    </th>
+            foreach (var item in Model)
+            {
+                <li class="nav-item ">
+                    <a class="nav-link @active" data-toggle="tab"
+                       href="#t@(item.Temporada)">Temporada@(item.Temporada)</a>
+                </li>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Temporada)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Descripcion)
-                    </th>
-
-                    <th></th>
-                </tr>
-
-            @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Temporada)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                </tr>
+                active = "";
             }
 
-            </table>*@
+        }
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <br />
+        @{
+            var active2 = "show active";
+
+            foreach (var item in Model)
+            {
+
+                <div class="tab-pane fade @(active2)" id="t@(item.Temporada)">
+
+                    <div class="card-deck">
+
+                        @foreach (var epi in item.Episodios)
+
+                        {
+                            <div class="col-lg-3">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@epi.Nombre</h5>
+                                        <p class="card-text">@(epi.DuracionMin) min.</p>
+                                        <a href="#" class="btn btn-primary">Reproducir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+
+                active2 = "";
+            }
+        }
+    </div>
+
+</div>
+
+
+
