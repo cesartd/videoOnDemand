@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using VideoOnDemand.Data;
 using VideoOnDemand.Entities;
+using System;
 
 namespace VideoOnDemand.Repositories
 {
@@ -47,6 +48,10 @@ namespace VideoOnDemand.Repositories
             _context.Peliculas.Add(movie);
         }
 
+        public void Insert(Opinion opinion)
+        {
+            throw new NotImplementedException();
+        }
 
         public void UpdateComplete(Movie movie, int[] actorId, int[] generoId)
         {

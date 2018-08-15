@@ -70,6 +70,6 @@ namespace VideoOnDemand.Web.Controllers
 
             return View(temporadas);
         }
-
+       
     }
 }
