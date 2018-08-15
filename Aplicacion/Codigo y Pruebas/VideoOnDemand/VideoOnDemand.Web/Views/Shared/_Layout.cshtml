@@ -11,28 +11,41 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body style="background-color:#111111">
-    <nav class="navbar navbar-dark fixed-top" style="background-color:#1F1F20; height:11%" >
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <img src="~/Content/Media/Prime_Video_rip-off.png" width="25%" height="25%" class="d-inline-block align-top" alt="">
+            
+                <a class="navbar-brand" href="/Home/Index">
+                    <img src="~/Content/Media/Prime_Video_rip-off.png" style="width: 150px; height: 60px"  alt="">
                 </a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Video On Demand!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+
+                @*@Html.ActionLink("Video On Demand!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
                     
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Películas", "Index", "Pelicula")</li>
-                        <li>@Html.ActionLink("Series", "Index", "SeriePrincipal")</li>
+                        //<li class="nav-item active">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        //<li class="nav-item">@Html.ActionLink("Películas", "Index", "Pelicula")</li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Pelicula/Index">Pel&iacute;culas</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/SeriePrincipal/Index">Series</a>
+                        </li>
+
+
+                        //<li class="nav-item">@Html.ActionLink("Series", "Index", "SeriePrincipal")</li>
 
                         var user = User.Identity;
                         var context = new ApplicationDbContext();
@@ -41,27 +54,33 @@
                         //si es admin mostrar el menu administrar
                         if (s[0].ToString() == "Admin")
                         {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" 
                                    aria-haspopup="true" 
                                    aria-expanded="false">Cat&aacute;logos <span class="caret"></span></a>
+
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Películas", "Index", "ManagePelicula")</li>
-                                    <li>@Html.ActionLink("Series", "Index", "Serie")</li>
-                                    <li>@Html.ActionLink("Generos", "Index", "Genero")</li>
-                                    <li>@Html.ActionLink("Actores", "Index", "Persona")</li>
+                                    <li class="dropdown-item">@Html.ActionLink("Películas", "Index", "ManagePelicula")</li>
+                                    <li class="dropdown-item">@Html.ActionLink("Series", "Index", "Serie")</li>
+                                    <li class="dropdown-item">@Html.ActionLink("Generos", "Index", "Genero")</li>
+                                    <li class="dropdown-item">@Html.ActionLink("Actores", "Index", "Persona")</li>
                                 </ul>
                             </li>
                         }
                     }
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
+
+    <br />
+    
     <div class="container body-content">
+        <br />
+
         @RenderBody()
         <hr />
         <footer>
