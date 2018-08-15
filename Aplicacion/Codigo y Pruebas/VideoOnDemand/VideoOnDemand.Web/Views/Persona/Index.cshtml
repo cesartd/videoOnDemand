@@ -6,15 +6,15 @@
 }
 
 
-<h2>Actores</h2>
+<h2>Administrar actores</h2>
 
 <p>
-    @Html.ActionLink("Agregar Nuevo", "Create")
+    @Html.ActionLink("Agregar actor", "Create")
 </p>
 @using (Html.BeginForm("Index", "Persona", FormMethod.Get))
 {
     <p>
-        Nombre: <input type="text" name="Search">
+        <input type="text" name="Search" placeholder= "Nombre de Actor">
         <input type="submit" value="Buscar" />
     </p>
 }
@@ -22,13 +22,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Nombre:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripción:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FechaNacimiento)
+            Fecha de Nacimiento:
         </th>
         <th></th>
     </tr>
