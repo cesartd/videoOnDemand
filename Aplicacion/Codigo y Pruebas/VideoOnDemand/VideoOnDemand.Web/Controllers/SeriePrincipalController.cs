@@ -49,9 +49,13 @@ namespace VideoOnDemand.Web.Controllers
             //consulte los episodios del repositorio
             var lst = repository.Query(t => t.SerieId == id && t.Estatus == EEstatusMedia.VISIBLE).GroupBy(n => n.Temporada).OrderBy(n=> n.Key);
 
+	    //lst.GroupBy(n => n.Temporada);
+
+            List<TemporadaViewModel> temporadas = new List<TemporadaViewModel>();
             //lst.GroupBy(n => n.Temporada);
 
             List<TemporadaViewModel> temporadas = new List<TemporadaViewModel>();
+
 
             foreach (var item in lst )
             {
@@ -119,6 +123,7 @@ namespace VideoOnDemand.Web.Controllers
             }
           
         }
+
             return View(temporadas);
         }
        
