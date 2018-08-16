@@ -1,12 +1,11 @@
 ﻿@model VideoOnDemand.Web.Models.MovieViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Película";
 }
 
-<h2>Borrar Película</h2>
+<h2>¿Desea eliminar este registro?</h2>
 
-<h3>¿Quiere borrar esta película?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -57,7 +56,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Eliminar" class="btn btn-default" /> |
-            @Html.ActionLink("Regresar", "Index")
+            @Html.ActionLink("Regresar a las lista de películas", "Index")
         </div>
     }
 </div>
