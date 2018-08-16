@@ -64,7 +64,7 @@
         <div class="row" style="vertical-align:bottom">
             <div class="col-md-3"><h4>Películas de @genero</h4></div>
             <div class="col-md-2">
-                <h5>Ver más</h5>
+                <a href="/Pelicula/Lista"><h5>Ver más</h5></a>
             </div>
              
         </div>
@@ -73,14 +73,14 @@
             {
 
                 <div class="card" id="tarjeta" style="margin:2px">
-                    <a href="/Serie"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
+                    <a href="/Pelicula/Details/@item.Id"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
                 </div>
             }
 
 
             <div class="card" style="margin:2px">
                 <div class="card-body">
-                    <a href="/Pelicula/Lista" class="card-title" style="color:black">Ver más</a>
+                    <a href="/Pelicula/Lista?Search=&genero=@genero&pageSize=10" style="color:black">Ver más</a>
                 </div>
             </div>
         </div>
