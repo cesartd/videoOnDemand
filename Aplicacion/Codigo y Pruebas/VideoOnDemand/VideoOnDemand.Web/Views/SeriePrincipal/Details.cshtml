@@ -1,58 +1,165 @@
-﻿@model IEnumerable<VideoOnDemand.Web.Models.EpisodioViewModel>
+﻿@using VideoOnDemand.Web.Models
+@model IEnumerable<VideoOnDemand.Web.Models.TemporadaViewModel>
+
 
 @{
     ViewBag.Title = "Details";
-    int? num = 0;
+
 }
 
-<h2>Details</h2>
+<style>
+    .tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
 
+.nav-tabs {
+    margin-bottom: 0;
+}
+</style>
 
-<ul class="nav nav-tabs">
+<h2>&nbsp;&nbsp;&nbsp;Detalles</h2>
+<br />
 
-    @foreach (var item in Model)
-    {
-        if (@num != item.Temporada)
-        {
-            num = item.Temporada;
-            <li class="nav-item"><a class="nav-link disabled" href="#">Temporada @item.Temporada</a></li>
+<div class="container" style="height: auto">
+
+    <div class="container float-lg-left" style="width: auto;">
+        <img src="~/robot.jpg" alt="robot" class="img-fluid" />
+    </div>
+
+    <div class="container-fluid" style="width: 500px;">
+
+            <p hidden id="serieId">@ViewBag.SerieDetalle.Id</p>
+        @{
+            var date = @Convert.ToDateTime(ViewBag.SerieDetalle.FechaDeLanzamiento);
+            date = date.ToString("yyyy");
+            <h4>@(ViewBag.SerieDetalle.Nombre) (@(date)) </h4>
         }
+            
+        <br />
+        <label><b>Temporada:</b></label> <label id="numTemporada">1</label>
+        <br />
+        <label> <b> Descripcion: </b> @ViewBag.SerieDetalle.Descripcion </label>
+        <br />
+
+        <label> <b> Generos: </b>
+        </label>
+     @{
+
+         var comaGeneros = "";
+
+
+
+         foreach (var item in ViewBag.SerieDetalle.Generos)
+         {
+
+            <label>@comaGeneros @(item.Nombre)</label>
+             comaGeneros = ",";
+         }
     }
-</ul>
+           
+        <br />
 
+        <label> <b> Actores: </b></label>
 
+        @{
+            var comaActores = "";
+            foreach (var item in ViewBag.SerieDetalle.Actores)
+            {
+                <label>@comaActores @item.Nombre</label>
+                comaActores = ",";
+            }
+        }
+        
 
-        @*<table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
-                    </th>
+    </div>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Temporada)
-                    </th>
+    <div style="clear:both">
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Descripcion)
-                    </th>
+    </div>
+</div>
+<br />
+<hr style="height: 1px; color: black"/>
+<br />
 
-                    <th></th>
-                </tr>
+<div class="container-fluid">
+    <ul class="nav nav-tabs" id="tabsSerie">
 
-            @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
+        @{
+            var active = "active";
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Temporada)
-                    </td>
+            foreach (var item in Model)
+            {
+                <li class="nav-item ">
+                    <a class="nav-link @active" data-toggle="tab"
+                       href="#t@(item.Temporada)">Temporada @(item.Temporada)</a>
+                </li>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                </tr>
+                active = "";
             }
 
-            </table>*@
+        }
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <br />
+        @{
+            var active2 = "show active";
+
+            foreach (var item in Model)
+            {
+
+                <div class="tab-pane fade @(active2)" id="t@(item.Temporada)">
+
+                    <div class="card-deck">
+
+                        @foreach (var epi in item.Episodios)
+
+                        {
+                            <div class="col-lg-3">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@epi.Nombre</h5>
+                                        <p class="card-text">@(epi.DuracionMin) min.</p>
+                                        <a href="#" class="btn btn-primary">Reproducir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+
+                active2 = "";
+            }
+        }
+    </div>
+
+</div>
+
+<br />
+
+@{Html.RenderPartial("_Opiniones");
+
+}
+
+@section Scripts{
+    <script src="~/Scripts/opinion.api.js">
+    </script>
+    <script>
+        $('#tabsSerie').on("click", "li", function (event) {
+            var activeTab = $(this).find('a').attr('href');
+            activeTab = activeTab.replace(/#t/g,"");
+            $('#numTemporada').text(activeTab);
+            
+        });
+    </script>
+}
+
+
+

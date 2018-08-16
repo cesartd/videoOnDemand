@@ -1,10 +1,10 @@
 ﻿@model VideoOnDemand.Web.Models.MovieViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar Pelicula";
 }
 
-<h2>Nueva película</h2>
+<h2>Agregar película</h2>
 
 
 @using (Html.BeginForm()) 
@@ -14,7 +14,7 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-group" >
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
@@ -49,6 +49,7 @@
         
         <div>
             <label>Generos</label>
+            @Html.ValidationMessageFor(model => model.GenerosSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.GenerosDisponibles)
             {
                 var seleccionado = "";
@@ -73,6 +74,7 @@
 
         <div>
             <label>Actores</label>
+            @Html.ValidationMessageFor(model => model.ActoresSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.ActoresDisponibles)
             {
                 var seleccionado = "";
@@ -97,7 +99,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="submit" value="Guardar Película" class="btn btn-default" />
             </div>
         </div>        
 
@@ -107,7 +109,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Regresar a lista de películas", "Index")
 </div>
 
 @section Scripts {

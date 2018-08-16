@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VideoOnDemand.Web.Models.MovieViewModel>
+﻿@model VideoOnDemand.Web.Models.PaginatorViewModel<VideoOnDemand.Web.Models.MovieViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +8,29 @@
 
 <form class="form-inline md-form mr-auto mb-4">
     <input class="form-control mr-sm-2" type="text" placeholder="Nombre de la Película" aria-label="Search" name="Search">
+    <div class="col-md-3">
+        <label>Genero de la Pelicula</label>
+        <select id="genero" name="genero" class="form-control">
+            @if (String.IsNullOrEmpty(ViewBag.Genero))
+            {
+                <option value="">Seleccione una opción</option>
+            }
+            else
+            {
+                    <option value=@ViewBag.Genero>@ViewBag.Genero</option>
+
+                    <option value="">Seleccione una opción</option>
+            }
+
+            @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
+            {
+                <option value="@genero">@genero</option>
+            }
+        </select>
+    </div>
+
     <button class="btn btn-elegant btn-rounded btn-sm my-0" type="submit" value="Buscar">Buscar</button>
+    
 </form>
 <br>
 
@@ -21,7 +43,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.DisplayName("Nombre")
         </th>
         <th>
             @Html.DisplayName("Duración")
@@ -35,7 +57,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Results) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nombre)

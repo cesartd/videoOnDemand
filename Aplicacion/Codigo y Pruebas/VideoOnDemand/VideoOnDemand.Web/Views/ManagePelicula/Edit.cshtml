@@ -1,10 +1,10 @@
 ﻿@model VideoOnDemand.Web.Models.MovieViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Película";
 }
 
-<h2>Editar película</h2>
+<h2>Editar Película</h2>
 
 
 @using (Html.BeginForm())
@@ -65,6 +65,7 @@
         </div>
         <div class="panel-body">
             <label>Genero</label>
+            @Html.ValidationMessageFor(model => model.GenerosSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.GenerosDisponibles)
             {
                 var seleccionado = "";
@@ -89,6 +90,7 @@
 
         <div class="panel-body">
             <label>Actor</label>
+            @Html.ValidationMessageFor(model => model.ActoresSeleccionados, "", new { @class = "text-danger" })
             @foreach (var item in Model.ActoresDisponibles)
                 {
                     var seleccionado = "";
@@ -115,14 +117,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="submit" value="Guardar película" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Regresar a la lista de películas", "Index")
 </div>
 
 @section Scripts {
