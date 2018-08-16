@@ -1,10 +1,10 @@
 ﻿@model VideoOnDemand.Web.Models.MovieViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar Pelicula";
 }
 
-<h2>Nueva película</h2>
+<h2>Agregar película</h2>
 
 
 @using (Html.BeginForm()) 
@@ -99,7 +99,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="submit" value="Guardar Película" class="btn btn-default" />
             </div>
         </div>        
 
@@ -109,7 +109,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Regresar a lista de películas", "Index")
 </div>
 
 @section Scripts {
