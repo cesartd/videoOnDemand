@@ -37,7 +37,7 @@ namespace VideoOnDemand.Web.Controllers
             //var includes2 = new Expression<Func<Serie, object>>[] { x => x.Actores };
 
             var serie = repositorySerie.QueryIncluding(n => n.Id == id && n.Estatus == EEstatusMedia.VISIBLE, includes1).FirstOrDefault();
-       
+
 
             if (serie == null)
             {
@@ -47,17 +47,13 @@ namespace VideoOnDemand.Web.Controllers
             SerieActorGeneroViewModel serieModel = MapHelper.Map<SerieActorGeneroViewModel>(serie);
 
             //consulte los episodios del repositorio
-            var lst = repository.Query(t => t.SerieId == id && t.Estatus == EEstatusMedia.VISIBLE).GroupBy(n => n.Temporada).OrderBy(n=> n.Key);
+            var lst = repository.Query(t => t.SerieId == id && t.Estatus == EEstatusMedia.VISIBLE).GroupBy(n => n.Temporada).OrderBy(n => n.Key);
 
-	    //lst.GroupBy(n => n.Temporada);
-
-            List<TemporadaViewModel> temporadas = new List<TemporadaViewModel>();
             //lst.GroupBy(n => n.Temporada);
 
             List<TemporadaViewModel> temporadas = new List<TemporadaViewModel>();
-
-
-            foreach (var item in lst )
+            //lst.GroupBy(n => n.Temporada);
+            foreach (var item in lst)
             {
                 TemporadaViewModel temp = new TemporadaViewModel();
                 temp.Temporada = item.Key;
@@ -68,6 +64,9 @@ namespace VideoOnDemand.Web.Controllers
 
             ViewBag.SerieId = id;
             ViewBag.SerieDetalle = serieModel;
+
+            return View(temporadas);
+        }
 
             //mapeamos la lista de individuos con una lista de EpisodioViewModel
             //var models = MapHelper.Map<IEnumerable<EpisodioViewModel>>(lst);
@@ -122,10 +121,6 @@ namespace VideoOnDemand.Web.Controllers
                 return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
             }
           
-        }
-
-            return View(temporadas);
-        }
-       
+        }       
     }
 }
