@@ -1,0 +1,133 @@
+﻿@model VideoOnDemand.Web.Models.PaginatorViewModel<VideoOnDemand.Web.Models.MovieViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<form class="form-inline">
+    <div class="row">
+
+    <div class="col-md-4" style="margin-right:5px;">
+        <input class="form-control " type="text" placeholder="Nombre de la película" aria-label="Search" name="Search">
+    </div>
+
+    <div class="col-md-2" style="margin-right:15px;">
+        <select id="genero" name="genero" class="form-control">
+            @if (String.IsNullOrEmpty(ViewBag.Genero))
+            {
+                <option value="">Género</option>
+            }
+            else
+            {
+                <option value=@ViewBag.Genero>@ViewBag.Genero</option>                    
+                <option value="">Género</option>
+            }
+
+            @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
+            {
+                <option value="@genero">@genero</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-1" style="margin-right:15px;">
+        <input type="number" class="form-control" style="width:60px" id="pageSize" name="pageSize" min="1" value="@Model.PageSize" />
+    </div>
+
+    <div class="col-md-1">
+        <label></label>
+        <button class="btn btn-elegant btn-rounded" type="submit" value="Buscar">Buscar</button>
+    </div>
+        </div>
+</form>
+<br>
+
+
+<table class="table">
+    <tr>
+
+    @foreach (var item in Model.Results)
+    {
+        <tr>
+            <td>
+                <div class="row">
+
+                    <div class="figure col-md-3">
+                    <figure >
+                        <img src="~/Content/Media/PlaceHoldeLista.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    </figure>
+                    </div>
+
+                    <div class="col-md-9">
+                        <h5 style="color:#48A3C6">@Html.DisplayFor(modelItem => item.Nombre)</h5>
+                        <h6>@item.FechaDeLanzamiento.Value.ToString("yyyy")</h6>
+                        <p style="color:#7D8E9F;">@item.Descripcion</p>
+                        <div class="row" style="margin-bottom:30px;">
+                                <div class="col-sm-1">
+                                    <button class="btn btn-primary" style="border-radius:100%" href="/" ><img src="~/Content/Media/Play.png" style="width:35px; height:42px;"></button>
+                                </div>
+
+                                <div class="col-sm-2" style="margin-top:15px; margin-left:20px;">
+                                    <h6>Reproducir</h6>
+                                </div>
+                                <button class="btn btn-secondary" id="btnFavorito-@item.Id" onclick="agregar(@item.Id)">+ Mi Lista</button>
+                                <button class="btn btn-secondary" id="btnQuitarFavorito-@item.Id" onclick="quitarFavorito(@item.Id)" style="display:none">Quitar de Mi Lista</button>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.Partial("_Paginator")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+		function agregar(id) {
+			var favorito = { MediaId: id };
+			$.ajax({
+				url: '@Url.Action("AgregarFavorito","SeriePrincipal")',
+				datatype: 'JSON',
+				type: 'POST',
+				contentType: "application/json",
+				data: JSON.stringify(favorito),
+				success: function (data) {
+					if (data.Success) {
+						$("#btnFavorito-" + id).hide();
+						$("#btnQuitarFavorito-" + id).show();
+					}
+					else { }
+
+
+				}
+			});
+		}
+
+		function quitarFavorito(id) {
+			var favorito = { MediaId: id };
+			$.ajax({
+				url: '@Url.Action("DeleteFavorito","SeriePrincipal")',
+				datatype: 'JSON',
+				type: 'POST',
+				contentType: "application/json",
+				data: JSON.stringify(favorito),
+				success: function (data) {
+					if (data.Success) {
+						$("#btnQuitarFavorito-" + id).hide();
+						$("#btnFavorito-" + id).show();
+					}
+					else { }
+
+
+				}
+			});
+		}
+
+    </script>
+
+
+}

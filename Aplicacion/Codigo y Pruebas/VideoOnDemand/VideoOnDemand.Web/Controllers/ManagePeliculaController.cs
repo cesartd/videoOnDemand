@@ -35,7 +35,7 @@ namespace VideoOnDemand.Web.Controllers
 
             ViewBag.Busqueda = Search;
             ViewBag.Genero = genero;
-            ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
+            ViewBag.ListaGeneros = generoRepository.GetAll().Where(g => g.Activo == true).Select(g => g.Nombre).Where(g => g != genero).ToList();
 
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
@@ -61,7 +61,7 @@ namespace VideoOnDemand.Web.Controllers
         {
             var model = new MovieViewModel();
             GeneroRepository generoRepository = new GeneroRepository(context);
-            var lst = generoRepository.GetAll();
+            var lst = generoRepository.GetAll().Where(g => g.Activo == true).ToList();
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
 
             PersonaRepository personaRepository = new PersonaRepository(context);
@@ -76,7 +76,7 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Create(MovieViewModel model)
         {
             GeneroRepository generoRepository = new GeneroRepository(context);
-            var lst = generoRepository.GetAll();
+            var lst = generoRepository.GetAll().Where(g=>g.Activo == true).ToList();
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
 
             PersonaRepository personaRepository = new PersonaRepository(context);

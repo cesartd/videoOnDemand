@@ -4,43 +4,56 @@
     ViewBag.Title = "Index";
 }
 
+<head>
+    <style>
+        .links {
+            color:white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
 <h2>Administrar Películas</h2>
 
-<form class="form-inline md-form mr-auto mb-4">
-    <input class="form-control mr-sm-2" type="text" placeholder="Nombre de la Película" aria-label="Search" name="Search">
-    <div class="col-md-3">
-        <label>Genero de la Pelicula</label>
-        <select id="genero" name="genero" class="form-control">
-            @if (String.IsNullOrEmpty(ViewBag.Genero))
+<form class="form-inline">
+    <div class="row">
+
+        <div class="col-md-5" style="margin-right:8px">
+            <input class="form-control " type="text" placeholder="Nombre de la película" aria-label="Search" name="Search">
+        </div>
+
+        <div class="col-md-3">
+            <select id="genero" name="genero" class="form-control">
+                @if (String.IsNullOrEmpty(ViewBag.Genero))
             {
-                <option value="">Seleccione una opción</option>
-            }
-            else
-            {
+                    <option value="">Género</option>
+                }
+                else
+                {
                     <option value=@ViewBag.Genero>@ViewBag.Genero</option>
+                    <option value="">Género</option>
+                }
 
-                    <option value="">Seleccione una opción</option>
-            }
-
-            @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
+                @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
             {
-                <option value="@genero">@genero</option>
-            }
-        </select>
+                    <option value="@genero">@genero</option>
+                }
+            </select>
+        </div>
+        
+        <div class="col-md-1">
+            <label></label>
+            <button class="btn btn-elegant btn-rounded" type="submit" value="Buscar">Buscar</button>
+        </div>
     </div>
-
-    <button class="btn btn-elegant btn-rounded btn-sm my-0" type="submit" value="Buscar">Buscar</button>
-    
 </form>
 <br>
 
-<p>
-    @Html.ActionLink("Crear nueva película", "Create")
-</p>
+<a class="links" href="/ManagePelicula/Create">Crear película</a><br>
 
 
 
-<table class="table">
+<table class="table table-dark table-striped">
     <tr>
         <th>
             @Html.DisplayName("Nombre")
@@ -52,9 +65,8 @@
             @Html.DisplayName("Fecha lanzamiento")
         </th>
         <th>
-            @Html.DisplayName("Actions")
+            @Html.DisplayName("Acciones")
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model.Results) {
@@ -69,8 +81,8 @@
             @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
+            <a class="links" href="/ManagePelicula/Edit/@item.Id">Editar</a> |
+            <a class="links" href="/ManagePelicula/Delete/@item.Id">Eliminar</a>
         </td>
     </tr>
 }
