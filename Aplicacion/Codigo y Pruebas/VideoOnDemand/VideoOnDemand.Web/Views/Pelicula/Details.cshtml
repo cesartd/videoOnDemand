@@ -140,7 +140,17 @@
             </div>
         </p>
     </div>
-    
+    <div class="container-fluid">
+        
+            <h4>@Html.DisplayFor(model => model.Nombre)</h4>
+        <br />
+        <label><b>Duración:</b>@Html.DisplayFor(model => model.DuracionMin)</label>
+        <br />
+        <label> <b>Fecha de lanzamiento: </b> @Html.DisplayFor(model => model.FechaDeLanzamiento) </label>
+        <br />
+        <label><b>Descripción</b></label>
+        <label> <b> Generos: </b></label>
+    </div>
 </section>
 <article>
     <h4>Comentarios:</h4>
