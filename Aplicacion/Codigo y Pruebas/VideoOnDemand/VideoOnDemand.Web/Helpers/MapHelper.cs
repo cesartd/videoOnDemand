@@ -10,6 +10,7 @@ namespace VideoOnDemand.Web.Helpers
 {
     public class MapHelper
     {
+
         internal static IMapper mapper;
 
         static MapHelper()
@@ -20,7 +21,8 @@ namespace VideoOnDemand.Web.Helpers
                 x.CreateMap<Serie, SerieViewModel>().ReverseMap();
                 x.CreateMap<Movie, MovieViewModel>().ReverseMap();
                 x.CreateMap<Persona, PersonaViewModel>().ReverseMap();//Se crea el de persona
-
+       			x.CreateMap<Serie, SerieActorGeneroViewModel>().ReverseMap();
+                x.CreateMap<Opinion, OpinionViewModel>().ReverseMap();
                 x.CreateMap<Episodio, EpisodioViewModel>().ReverseMap();
 
                });
