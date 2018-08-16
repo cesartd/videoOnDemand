@@ -10,6 +10,7 @@ namespace VideoOnDemand.Web.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
         [AllowAnonymous]

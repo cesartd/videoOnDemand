@@ -1,0 +1,49 @@
+﻿<link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
+<div>
+    <h4>Comentarios:</h4>
+    <form id="contenidoComentarios">
+        <div class="form-group">
+            <label>Puntuación</label>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="rdPuntuacion" value="1" /> 1
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rdPuntuacion" value="2" /> 2
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rdPuntuacion" value="3" /> 3
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rdPuntuacion" value="4" /> 4
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rdPuntuacion" value="5" /> 5
+                </label>
+
+            </div>
+           
+        </div>
+        <div class="form-group">
+            <label>Comentario</label>
+            <textarea class="form-control" id="tbxComentarios" placeholder="Deje su comentario aquí"></textarea>
+        </div>
+           <button type="button" class="btn btn-default" onclick="crear()"> Agregar</button>
+          
+    </form>
+    <ul class="list-group" id="listaOpiniones">
+       
+       
+    </ul>
+    <input id ="hdnUrlGetlistOpinion" type="hidden" value="@Url.Action("GetList", "Opinion")"/>
+    <input id="hdnUrlCreatelistOpinion" type="hidden" value="@Url.Action("Create", "Opinion")" />
+    <input id="hdnUrlDeletelistOpinion" type="hidden" value="@Url.Action("Delete", "Opinion")" />
+</div>
+
+

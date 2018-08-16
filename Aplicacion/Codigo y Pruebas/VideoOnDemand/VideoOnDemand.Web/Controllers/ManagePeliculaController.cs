@@ -35,7 +35,7 @@ namespace VideoOnDemand.Web.Controllers
 
             ViewBag.Busqueda = Search;
             ViewBag.Genero = genero;
-            ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
+            ViewBag.ListaGeneros = generoRepository.GetAll().Where(g => g.Activo == true).Select(g => g.Nombre).Where(g => g != genero).ToList();
 
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
@@ -61,11 +61,11 @@ namespace VideoOnDemand.Web.Controllers
         {
             var model = new MovieViewModel();
             GeneroRepository generoRepository = new GeneroRepository(context);
-            var lst = generoRepository.GetAll();
+            var lst = generoRepository.GetAll().Where(g => g.Activo == true).ToList();
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
 
             PersonaRepository personaRepository = new PersonaRepository(context);
-            var lst2 = personaRepository.GetAll();
+            var lst2 = personaRepository.GetAll().Where(g => g.Activo == true).ToList(); 
             model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst2);
 
             return View(model);
@@ -76,11 +76,11 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Create(MovieViewModel model)
         {
             GeneroRepository generoRepository = new GeneroRepository(context);
-            var lst = generoRepository.GetAll();
+            var lst = generoRepository.GetAll().Where(g=>g.Activo == true).ToList();
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst);
 
             PersonaRepository personaRepository = new PersonaRepository(context);
-            var lst2 = personaRepository.GetAll();
+            var lst2 = personaRepository.GetAll().Where(g => g.Activo == true).ToList();
             model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst2);
 
 
@@ -140,8 +140,8 @@ namespace VideoOnDemand.Web.Controllers
             var model = MapHelper.Map<MovieViewModel>(movie);
 
             //Consultando topic ordenados por Name
-            var genero = generoRepo.Query(null, "Nombre");
-            var actor = actorRepo.Query(null, "Nombre");
+            var genero = generoRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
+            var actor = actorRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
 
             //map de topic a topic view model
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(genero);
@@ -180,16 +180,16 @@ namespace VideoOnDemand.Web.Controllers
                     context.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                var genero = generoRepo.Query(null, "Nombre");
-                var actor = actorRepo.Query(null, "Nombre");
+                var genero = generoRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
+                var actor = actorRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
                 model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(genero);
                 model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(actor);
                 return View(model);
             }
             catch (Exception ex)
             {
-                var genero = generoRepo.Query(null, "Nombre");
-                var actor = actorRepo.Query(null, "Nombre");
+                var genero = generoRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
+                var actor = actorRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
                 model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(genero);
                 model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(actor);
                 return View(model);

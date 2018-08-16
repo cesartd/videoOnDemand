@@ -1,116 +1,150 @@
 ﻿@model VideoOnDemand.Web.Models.MovieViewModel
 
 @{
-    ViewBag.Title = "Agregar Pelicula";
+    ViewBag.Title = "Editar Película";
 }
 
-<h2>Agregar película</h2>
+<h2>Editar Película</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
+
+    <div class="row bg-light" style="color:black; font-weight:bold">
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group" >
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <br>
+        <div class="col-lg-4">
+            <br>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <div class="form-group">
+                @Html.Label("Descripción", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Duración", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DuracionMin, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DuracionMin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Lanzamiento", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FechaDeLanzamiento, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FechaDeLanzamiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Estado", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Estatus, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Estatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Duración", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DuracionMin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DuracionMin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.Label("Fecha lanzamiento", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                
-                @Html.EditorFor(model => model.FechaDeLanzamiento, new { htmlAttributes = new { @class = "form-control datepicker" } })
-                @Html.ValidationMessageFor(model => model.FechaDeLanzamiento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div>
-            <label>Generos</label>
-            @Html.ValidationMessageFor(model => model.GenerosSeleccionados, "", new { @class = "text-danger" })
-            @foreach (var item in Model.GenerosDisponibles)
-            {
-                var seleccionado = "";
-                //activar el checkbox si de los generos disponbles existe en los temas seleccionados
-
-                if (Model.GenerosSeleccionados != null)
-                {
-                    if (Model.GenerosSeleccionados.Contains(item.Id.Value))
+        <div class="flex-sm-row-reverse col-md-2">
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <label>Genero</label>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationMessageFor(model => model.GenerosSeleccionados, "", new { @class = "text-danger" })
+                    @foreach (var item in Model.GenerosDisponibles)
                     {
-                        seleccionado = "checked";
-                    }
-                }
+                        var seleccionado = "";
 
-                <div class="checkbox">
-                    <label>
-                        <input name="GenerosSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
-                    </label>
+                        //activar el checkbox si de los temas disponibles
+                        //existe en los temas seleccionados
+                        if (Model.GenerosSeleccionados != null)
+                        {
+                            if (Model.GenerosSeleccionados.Contains(item.Id.Value))
+                            {
+                                seleccionado = "checked";
+                            }
+                        }
+
+                        <div class="checkbox">
+                            <label>
+                                <input name="GenerosSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado> @item.Nombre
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <label>Actor</label>
                 </div>
 
-            }
-        </div>
-
-        <div>
-            <label>Actores</label>
-            @Html.ValidationMessageFor(model => model.ActoresSeleccionados, "", new { @class = "text-danger" })
-            @foreach (var item in Model.ActoresDisponibles)
-            {
-                var seleccionado = "";
-                //activar el checkbox si de los actores disponbles existe en los temas seleccionados
-
-                if (Model.ActoresSeleccionados != null)
-                {
-                    if (Model.ActoresSeleccionados.Contains(item.Id.Value))
+                <div class="card-body">
+                    @Html.ValidationMessageFor(model => model.ActoresSeleccionados, "", new { @class = "text-danger" })
+                    @foreach (var item in Model.ActoresDisponibles)
                     {
-                        seleccionado = "checked";
+                        var seleccionado = "";
+
+                        //activar el checkbox si de los temas disponibles
+                        //existe en los temas seleccionados
+                        if (Model.ActoresSeleccionados != null)
+                        {
+                            if (Model.ActoresSeleccionados.Contains(item.Id.Value))
+                            {
+                                seleccionado = "checked";
+                            }
+                        }
+
+                        <div class="checkbox">
+                            <label>
+                                <input name="ActoresSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado> @item.Nombre
+                            </label>
+                        </div>
                     }
-                }
-
-                <div class="checkbox">
-                    <label>
-                        <input name="ActoresSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
-                    </label>
                 </div>
+            </div>
+            <br>
 
-            }
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar Película" class="btn btn-default" />
+        <div class="flex-sm-row-reverse">
+            <br>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar película" class="btn btn-default" />
+                </div>
             </div>
-        </div>        
+
+            <div>
+                @Html.ActionLink("Regresar a la lista de películas", "Index")
+            </div>
+
+        </div>
+
+
 
     </div>
-    
 
 }
 
-<div>
-    @Html.ActionLink("Regresar a lista de películas", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -31,7 +31,8 @@
 
     <div class="container-fluid" style="width: 500px;">
 
-            <p hidden id="serieId">@ViewBag.SerieDetalle.Id</p>
+            <input type="hidden" id="serieId" value="@ViewBag.SerieDetalle.Id" />
+            <input type="hidden" id="usuarioId" value="@ViewBag.UsuarioId" />
         @{
             var date = @Convert.ToDateTime(ViewBag.SerieDetalle.FechaDeLanzamiento);
             date = date.ToString("yyyy");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -100,6 +101,16 @@ namespace VideoOnDemand.Web.Controllers
             //mapeamos la lista de individuos con una lista de EpisodioViewModel
             //var models = MapHelper.Map<IEnumerable<EpisodioViewModel>>(lst);
 
+
+            var usuarioId = User.Identity.GetUserId();
+            var repositoryUser = new UsuarioRepository(context);
+            var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+            if (usuario != null)
+            {
+               ViewBag.UsuarioId = usuario.Id;
+            }
+            return View(temporadas);
+
         [HttpPost]
         public ActionResult AgregarFavorito(FavoritoViewModel model)
         {
@@ -122,6 +133,7 @@ namespace VideoOnDemand.Web.Controllers
             context.SaveChanges();
 
             return Json(new { Success = true},JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]

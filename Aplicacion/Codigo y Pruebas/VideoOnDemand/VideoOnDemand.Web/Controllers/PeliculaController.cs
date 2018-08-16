@@ -16,7 +16,7 @@ namespace VideoOnDemand.Web.Controllers
     {
         VideoOnDemandContext context = new VideoOnDemandContext();
         // GET: Pelicula
-        public ActionResult Index(int page = 1, string Search = null, string genero = null, int pageSize = 3)
+        public ActionResult Index(int page = 1, string Search = null,  int pageSize = 7,string genero = null)
         {
 
 
@@ -33,7 +33,7 @@ namespace VideoOnDemand.Web.Controllers
 
             ViewBag.Busqueda = Search;
             ViewBag.Genero = genero;
-            ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
+            ViewBag.ListaGeneros = generoRepository.GetAll().Where(g=>g.Activo == true).Select(g => g.Nombre).Where(g => g != genero).ToList();
 
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
@@ -88,6 +88,37 @@ namespace VideoOnDemand.Web.Controllers
             var model = MapHelper.Map<MovieViewModel>(topic);
             return View(model);
         }
-              
+
+        // GET: Pelicula/Lista
+        public ActionResult Lista(int page = 1, string Search = null, string genero = null, int pageSize = 10)
+        {
+
+
+            MovieRepository repository = new MovieRepository(context);
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var includes = new Expression<Func<Movie, object>>[] { m => m.Generos };
+
+            int paginasTotales;
+            int filasTotales;
+
+            ICollection<Movie> movies;
+
+            movies = repository.QueryPageByNombreAndGeneroIncluding(Search, genero, includes, out paginasTotales, out filasTotales, "Nombre", page - 1, pageSize);
+
+            ViewBag.Busqueda = Search;
+            ViewBag.Genero = genero;
+            ViewBag.ListaGeneros = generoRepository.GetAll().Where(g => g.Activo == true).Select(g => g.Nombre).Where(g => g != genero).ToList();
+
+            var paginador = new PaginatorViewModel<MovieViewModel>();
+            paginador.Page = page;
+            paginador.PageSize = pageSize;
+            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies);
+            paginador.TotalPages = paginasTotales;
+            paginador.TotalRows = filasTotales;
+
+            return View(paginador);
+
+        }
+
     }
 }
