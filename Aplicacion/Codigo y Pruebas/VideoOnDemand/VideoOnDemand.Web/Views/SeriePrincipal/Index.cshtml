@@ -2,6 +2,7 @@
 
 @{
 	ViewBag.Title = "Index";
+	
 }
 
 <h1>Series</h1>
@@ -15,14 +16,16 @@
 <div class="container">
 	<div class="row">
 		@foreach (var item in Model)
-		{<div class="col-md-4">
+		{
+			<div class="col-md-4">
 				<div class="panel" style="border:groove; background-color : antiquewhite;min-height:250px">
 					<div class="panel text-center">
 						<div class="panel-body">
 							<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
 							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
 							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-							<a href="#" class="btn btn-primary">+ Mi Lista</a>
+							<button class="btn btn-primary" id="btnFavorito-@item.Id" onclick="agregar(@item.Id)">+ Mi Lista</button>
+							<button class="btn btn-primary" id="btnQuitarFavorito-@item.Id" onclick="quitarFavorito(@item.Id)" style="display:none">Quitar de Mi Lista</button>
 							<a href="/SeriePrincipal/Details/@item.Id" class="btn btn-primary">Detalles</a>
 						</div>
 					</div>
@@ -31,4 +34,53 @@
 		}
 	</div>
 </div>
+
+@section Scripts{
+	@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+		function agregar(id) {
+			var favorito = { MediaId: id };
+			$.ajax({
+				url: '@Url.Action("AgregarFavorito","SeriePrincipal")',
+				datatype: 'JSON',
+				type: 'POST',
+				contentType: "application/json",
+				data: JSON.stringify(favorito),
+				success: function (data) {
+					if (data.Success) {
+						$("#btnFavorito-" + id).hide();
+						$("#btnQuitarFavorito-" + id).show();
+					}
+					else { }
+
+
+				}
+			});
+		}
+
+		function quitarFavorito(id) {
+			var favorito = { MediaId: id };
+			$.ajax({
+				url: '@Url.Action("DeleteFavorito","SeriePrincipal")',
+				datatype: 'JSON',
+				type: 'POST',
+				contentType: "application/json",
+				data: JSON.stringify(favorito),
+				success: function (data) {
+					if (data.Success) {
+						$("#btnQuitarFavorito-" + id).hide();
+						$("#btnFavorito-" + id).show();
+					}
+					else { }
+
+
+				}
+			});
+		}
+
+</script>
+
+
+}
 

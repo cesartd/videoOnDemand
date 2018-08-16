@@ -68,7 +68,6 @@ namespace VideoOnDemand.Data
             personaEntity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             personaEntity.Property(x => x.Nombre).HasMaxLength(50).IsRequired();
             personaEntity.Property(x => x.Descripcion).HasMaxLength(500).IsOptional();
-
             opinionEntity.HasKey(x => x.Id);
             opinionEntity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             opinionEntity.Property(x => x.Puntuacion).IsRequired();

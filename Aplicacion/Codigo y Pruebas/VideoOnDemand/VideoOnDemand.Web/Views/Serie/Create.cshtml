@@ -1,102 +1,72 @@
 ﻿@model VideoOnDemand.Web.Models.SerieViewModel
 
-@{
-    ViewBag.Title = "Nueva Serie";
-}
-
-<h2>Crear serie</h2>
-
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
-	<h4>SerieViewModel</h4>
-	<hr />
-	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-	<div class="form-group">
-		@Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-		</div>
-	</div>
+    <div class="form-horizontal">
+        <h4>SerieViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-	<div class="form-group">
-		@Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-		</div>
-	</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-	<div class="form-group">
-		@Html.LabelFor(model => model.FechaDeLanzamiento, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.FechaDeLanzamiento, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.FechaDeLanzamiento, "", new { @class = "text-danger" })
-		</div>
-	</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DuracionMin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DuracionMin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DuracionMin, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-	<div>
-		<label>Generos</label>
-		@foreach (var item in Model.GenerosDisponibles)
-		{
-			var seleccionado = "";
-			//activar el checkbox si de los generos disponbles existe en los temas seleccionados
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaDeRegistro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaDeRegistro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FechaDeRegistro, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-			if (Model.GenerosSeleccionados != null)
-			{
-				if (Model.GenerosSeleccionados.Contains(item.Id.Value))
-				{
-					seleccionado = "checked";
-				}
-			}
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaDeLanzamiento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaDeLanzamiento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FechaDeLanzamiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-			<div class="checkbox">
-				<label>
-					<input name="GenerosSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
-				</label>
-			</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Estatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Estatus, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Estatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-		}
-	</div>
-
-	<div>
-		<label>Actores</label>
-		@foreach (var item in Model.ActoresDisponibles)
-		{
-			var seleccionado = "";
-			//activar el checkbox si de los actores disponbles existe en los temas seleccionados
-
-			if (Model.ActoresSeleccionados != null)
-			{
-				if (Model.ActoresSeleccionados.Contains(item.Id.Value))
-				{
-					seleccionado = "checked";
-				}
-			}
-
-			<div class="checkbox">
-				<label>
-					<input name="ActoresSeleccionados" type="checkbox" value="@item.Id.Value.ToString()" @seleccionado>@item.Nombre
-				</label>
-			</div>
-
-		}
-	</div>
-
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" value="Crear" class="btn btn-default" />
-		</div>
-	</div>
-</div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

@@ -17,6 +17,17 @@ namespace VideoOnDemand.Web.Controllers
         // GET: Serie
         public ActionResult Index()
         {
+            var model = new SerieViewModel();
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var lst2 = generoRepository.GetAll();
+            model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst2);
+
+            PersonaRepository personaRepository = new PersonaRepository(context);
+            var lst3 = personaRepository.GetAll();
+            model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst3);
+
+
+
             SerieRepository repository = new SerieRepository(context);
             //consulte los individuos del repositorio
             var lst = repository.Query(n => n.Estatus == EEstatusMedia.VISIBLE);
@@ -81,7 +92,6 @@ namespace VideoOnDemand.Web.Controllers
                     //mapear el modelo de vista a una entidad topic
                     Serie serie = MapHelper.Map<Serie>(model);
                     serie.FechaDeRegistro = DateTime.Now;
-                    serie.DuracionMin = 0;
                     serie.Estatus = EEstatusMedia.VISIBLE;
 
 
@@ -110,7 +120,7 @@ namespace VideoOnDemand.Web.Controllers
 
             var serie = repository.QueryIncluding(x => x.Id == id, includes1).SingleOrDefault();
             serie = repository.QueryIncluding(x => x.Id == id, includes2).SingleOrDefault();
-            var model = MapHelper.Map<MovieViewModel>(serie);
+            var model = MapHelper.Map<SerieViewModel>(serie);
             var genero = generoRepo.Query(null, "Nombre");
             var actor = actorRepo.Query(null, "Nombre");
 
@@ -225,8 +235,7 @@ namespace VideoOnDemand.Web.Controllers
         // GET: Episodio
         public ActionResult CreateEpisodes(int id)
         {
-            EpisodioViewModel model = new EpisodioViewModel();
-            model.SerieId = id;
+            EpisodioViewModel model = new EpisodioViewModel { SerieId = id };
              
             return View(model);
         }
