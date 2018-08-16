@@ -23,8 +23,20 @@
 							<h4 class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</h4>
 							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
 							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-							<button class="btn btn-primary" id="btnFavorito-@item.Id" onclick="agregar(@item.Id)">+ Mi Lista</button>
-							<button class="btn btn-primary" id="btnQuitarFavorito-@item.Id" onclick="quitarFavorito(@item.Id)" style="display:none">Quitar de Mi Lista</button>
+							@{
+								if (item.isAdded == true)
+								{
+									<button class="btn btn-primary" id="btnFavorito-@item.Id" onclick="agregar(@item.Id)" style="display:none">+ Mi Lista</button>
+									<button class="btn btn-primary" id="btnQuitarFavorito-@item.Id" onclick="quitarFavorito(@item.Id)">Quitar de Mi Lista</button>
+								}
+								else
+								{
+									<button class="btn btn-primary" id="btnFavorito-@item.Id" onclick="agregar(@item.Id)">+ Mi Lista</button>
+									<button class="btn btn-primary" id="btnQuitarFavorito-@item.Id" onclick="quitarFavorito(@item.Id)" style="display:none">Quitar de Mi Lista</button>
+								}
+
+
+							}
 							<a href="/SeriePrincipal/Details/@item.Id" class="btn btn-primary">Detalles</a>
 						</div>
 					</div>
