@@ -9,6 +9,7 @@ using VideoOnDemand.Entities;
 using VideoOnDemand.Repositories;
 using VideoOnDemand.Web.Helpers;
 using VideoOnDemand.Web.Models;
+using Microsoft.AspNet.Identity;
 
 namespace VideoOnDemand.Web.Controllers
 {
@@ -34,65 +35,92 @@ namespace VideoOnDemand.Web.Controllers
 
         // POST: Opinion/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(OpinionViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                var usuarioId = User.Identity.GetUserId();
+                var repositoryUser = new UsuarioRepository(context);
+                var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+                if (usuario == null)
+                {
+                    throw new ArgumentNullException("Usuario nulo");
+                }
 
-                return RedirectToAction("Index");
+                //Validar la descripción max 200 carac.
+                //Puntuacipon 0-5
+                //Reseña no repetida por usuario en el media
+                var repository = new OpinionRepository(context);
+                var opinion = repository.Query(x => x.MediaId == model.MediaId && x.UsuarioId == usuario.Id).FirstOrDefault();
+                if (opinion != null)
+                {
+                    throw new ArgumentNullException("Opinión repetida");
+                }
+                var registroOpinion = MapHelper.Map<Opinion>(model);
+                registroOpinion.FechaRegistro = DateTime.Now;
+                registroOpinion.UsuarioId = usuario.Id;
+                repository.Insert(registroOpinion);
+                context.SaveChanges();
+                return Json(new
+                {
+                    Success = true,
+
+                }, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                return Json(new
+                {
+                    Success = false,
+
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // GET: Opinion/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Opinion/Edit/5
+       
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Delete(OpinionViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (model==null) {
+                    throw new ArgumentNullException("El modelo no puede ser nulo");
+                }
+                if (model.Id==null) {
+                    throw new ArgumentNullException("Id nulo");
+                }
+                var usuarioId = User.Identity.GetUserId();
+                var repositoryUser = new UsuarioRepository(context);
+                var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+                if (usuario == null)
+                {
+                    throw new ArgumentNullException("Usuario nulo");
+                }
+                var repository = new OpinionRepository(context);
+                var opinion = repository.Query(x => x.Id == model.Id && x.UsuarioId == usuario.Id).FirstOrDefault();
+                if (opinion == null)
+                {
+                    throw new ArgumentNullException("Opinión nula");
+                }
+                repository.Delete(opinion);
+                context.SaveChanges();
+                return Json(new
+                {
+                    Success = true,
 
-                return RedirectToAction("Index");
+                }, JsonRequestBehavior.AllowGet);
             }
-            catch
-            {
-                return View();
+            catch (Exception e) {
+                return Json(new
+                {
+                    Success = false,
+
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // GET: Opinion/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Opinion/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         
-        public ActionResult GetList(int id){
+        public ActionResult GetList(int id) {
             try
             {
 
@@ -107,7 +135,7 @@ namespace VideoOnDemand.Web.Controllers
                     Opiniones = JsonConvert.SerializeObject(opinion)
                 }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception e) {
+            catch (Exception e) {
 
                 return Json(new
                 {
@@ -116,5 +144,6 @@ namespace VideoOnDemand.Web.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
+        
     }
 }
