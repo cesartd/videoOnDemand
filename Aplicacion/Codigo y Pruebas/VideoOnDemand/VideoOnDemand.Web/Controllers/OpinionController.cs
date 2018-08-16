@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using VideoOnDemand.Entities;
 using VideoOnDemand.Repositories;
 using VideoOnDemand.Web.Helpers;
 using VideoOnDemand.Web.Models;
@@ -95,7 +97,8 @@ namespace VideoOnDemand.Web.Controllers
             {
 
                 var repository = new OpinionRepository(context);
-                var opinion = repository.Query(x => x.MediaId == id);
+                var includes1 = new Expression<Func<Opinion, object>>[] { x => x.Usuario };
+                var opinion = repository.QueryIncluding(x => x.MediaId == id, includes1);
                 var models = MapHelper.Map<ICollection<OpinionViewModel>>(opinion);
 
                 return Json(new

@@ -31,8 +31,6 @@ namespace VideoOnDemand.Web.Models
         [Required]
         public int[] ActoresSeleccionados { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? FechaDeRegistro { get; set; }
 
         [DataType(DataType.Date)]

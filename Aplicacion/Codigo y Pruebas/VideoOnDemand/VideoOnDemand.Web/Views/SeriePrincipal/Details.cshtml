@@ -3,7 +3,7 @@
 
 
 @{
-        ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 
 }
 
@@ -31,9 +31,15 @@
 
     <div class="container-fluid" style="width: 500px;">
 
-            <h4>@ViewBag.SerieDetalle.Nombre</h4>
+            <p hidden id="serieId">@ViewBag.SerieDetalle.Id</p>
+        @{
+            var date = @Convert.ToDateTime(ViewBag.SerieDetalle.FechaDeLanzamiento);
+            date = date.ToString("yyyy");
+            <h4>@(ViewBag.SerieDetalle.Nombre) (@(date)) </h4>
+        }
+            
         <br />
-        <label><b>Temporada:</b></label>
+        <label><b>Temporada:</b></label> <label id="numTemporada">1</label>
         <br />
         <label> <b> Descripcion: </b> @ViewBag.SerieDetalle.Descripcion </label>
         <br />
@@ -42,15 +48,15 @@
         </label>
      @{
 
-         var coma = ",";
+         var comaGeneros = "";
 
-        
+
 
          foreach (var item in ViewBag.SerieDetalle.Generos)
          {
-                   
-            <label> @(item.Nombre) @coma</label>
 
+            <label>@comaGeneros @(item.Nombre)</label>
+             comaGeneros = ",";
          }
     }
            
@@ -59,9 +65,11 @@
         <label> <b> Actores: </b></label>
 
         @{
+            var comaActores = "";
             foreach (var item in ViewBag.SerieDetalle.Actores)
             {
-                <label> @item.Nombre</label>
+                <label>@comaActores @item.Nombre</label>
+                comaActores = ",";
             }
         }
         
@@ -75,8 +83,9 @@
 <br />
 <hr style="height: 1px; color: black"/>
 <br />
+
 <div class="container-fluid">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" id="tabsSerie">
 
         @{
             var active = "active";
@@ -85,7 +94,7 @@
             {
                 <li class="nav-item ">
                     <a class="nav-link @active" data-toggle="tab"
-                       href="#t@(item.Temporada)">Temporada@(item.Temporada)</a>
+                       href="#t@(item.Temporada)">Temporada @(item.Temporada)</a>
                 </li>
 
                 active = "";
@@ -132,6 +141,25 @@
     </div>
 
 </div>
+
+<br />
+
+@{Html.RenderPartial("_Opiniones");
+
+}
+
+@section Scripts{
+    <script src="~/Scripts/opinion.api.js">
+    </script>
+    <script>
+        $('#tabsSerie').on("click", "li", function (event) {
+            var activeTab = $(this).find('a').attr('href');
+            activeTab = activeTab.replace(/#t/g,"");
+            $('#numTemporada').text(activeTab);
+            
+        });
+    </script>
+}
 
 
 
