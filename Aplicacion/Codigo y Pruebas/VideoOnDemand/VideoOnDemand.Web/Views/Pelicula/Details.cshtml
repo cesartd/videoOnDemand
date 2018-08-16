@@ -54,6 +54,51 @@
 
     </div>
     <div class="InfoPeli">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Nombre: 
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+				Descripcion: 
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt>
+                Duracion:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DuracionMin)
+            </dd>
+
+            <dt>
+                Fecha De Registro:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaDeRegistro)
+            </dd>
+
+            <dt>
+               Fecha de Lanzamiento:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaDeLanzamiento)
+            </dd>
+
+        </dl>
+
+        <a href="https://www.youtube.com/watch?v=tmUximhgYnI">Reproducir</a>
         <table class="table">
             <thead>
                 <tr>
@@ -86,6 +131,7 @@
                 </tr>
             </tbody>
         </table>
+
         <p>
            
             <div class="col-sm-offset-2 col-sm-10">

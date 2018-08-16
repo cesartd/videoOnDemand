@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace VideoOnDemand.Web.Models
 {
@@ -36,4 +34,6 @@ namespace VideoOnDemand.Web.Models
         //mantiene los generos que seleccione el usuario
         public int[] ActoresSeleccionados { get; set; }
     }
+
+
 }
