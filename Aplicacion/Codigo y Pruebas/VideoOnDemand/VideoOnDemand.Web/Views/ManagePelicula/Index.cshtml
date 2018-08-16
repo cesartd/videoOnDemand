@@ -7,7 +7,7 @@
 <head>
     <style>
         .links {
-            color:white;
+            color:black;
             font-weight: bold;
         }
     </style>
@@ -49,42 +49,41 @@
 </form>
 <br>
 
-<a class="links" href="/ManagePelicula/Create">Crear película</a><br>
+<a style="color:white; font-weight:bold ;" href="/ManagePelicula/Create">Crear película</a><br>
 
 
+    <table class="table table-light table-striped rounded" style="color:black;">
+        <tr>
+            <th>
+                @Html.DisplayName("Nombre")
+            </th>
+            <th>
+                @Html.DisplayName("Duración")
+            </th>
+            <th>
+                @Html.DisplayName("Fecha lanzamiento")
+            </th>
+            <th>
+                @Html.DisplayName("Acciones")
+            </th>
+        </tr>
 
-<table class="table table-dark table-striped">
-    <tr>
-        <th>
-            @Html.DisplayName("Nombre")
-        </th>
-        <th>
-            @Html.DisplayName("Duración")
-        </th>
-        <th>
-            @Html.DisplayName("Fecha lanzamiento")
-        </th>
-        <th>
-            @Html.DisplayName("Acciones")
-        </th>
-    </tr>
+    @foreach (var item in Model.Results) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DuracionMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
+            </td>
+            <td>
+                <a class="links" href="/ManagePelicula/Edit/@item.Id">Editar</a> |
+                <a class="links" href="/ManagePelicula/Delete/@item.Id">Eliminar</a>
+            </td>
+        </tr>
+    }
 
-@foreach (var item in Model.Results) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DuracionMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaDeLanzamiento)
-        </td>
-        <td>
-            <a class="links" href="/ManagePelicula/Edit/@item.Id">Editar</a> |
-            <a class="links" href="/ManagePelicula/Delete/@item.Id">Eliminar</a>
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
