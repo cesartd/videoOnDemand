@@ -16,7 +16,7 @@ namespace VideoOnDemand.Web.Controllers
     {
         VideoOnDemandContext context = new VideoOnDemandContext();
         // GET: Pelicula
-        public ActionResult Index(int page = 1, string Search = null, string genero = null, int pageSize = 3)
+        public ActionResult Index(int page = 1, string Search = null, string genero = null, int pageSize = 7)
         {
 
 
@@ -34,6 +34,7 @@ namespace VideoOnDemand.Web.Controllers
             ViewBag.Busqueda = Search;
             ViewBag.Genero = genero;
             ViewBag.ListaGeneros = generoRepository.GetAll().Select(g => g.Nombre).Where(g => g != genero).ToList();
+            ViewBag.GenerosNetos = generoRepository.GetAll().Select(g=>g.Id).ToList() ;
 
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;

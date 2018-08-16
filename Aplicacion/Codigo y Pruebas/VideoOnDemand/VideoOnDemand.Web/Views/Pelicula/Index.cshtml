@@ -7,11 +7,10 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 </head>
 
-
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<body class="container-fluid">
+<div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -40,92 +39,67 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+    <br>
 
+<h4>Películas</h4>
 
-<h2 style="color:white">Películas</h2>
-
-<form class="form-inline md-form mr-auto mb-4" style="color:white;">
-    <div class="form-inline">
-        <<div class="col-md-3">
-            <label>Nombre de la Pelicula</label>
-            <input type="text" id="busqueda" name="Search" class="form-control" value=@ViewBag.Busqueda>
-        </div>
-        
-
-        <div class="col-md-3">
-            <label>Genero de la Pelicula</label>
-            <select id="genero" name="genero" class="form-control">
-                @if (String.IsNullOrEmpty(ViewBag.Genero))
-                {
-                    <option value="">Seleccione una opción</option>
-                }
-                else
-                {
-                    <option value="">Seleccione una opción</option>
-                    <option value=@ViewBag.Genero>@ViewBag.Genero</option>
-                }
-
-                @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
-                {
-                    <option value="@genero">@genero</option>
-                }
-            </select>
-        </div>
-
-        <div class="col-md-2">
-            <label>Peliculas por pagina</label>
-            <input type="number" class="form-control" id="pageSize" name="pageSize" min="1" value="@Model.PageSize" />
-        </div>
-
-
-    </div>
-    <div>
-        <button class="btn btn-primary" type="submit" value="Buscar">Buscar</button>
-    </div>
-</form>
-
-
-
-<br>
 <div class="card-deck">
-		@foreach (var item in Model.Results)
+		@foreach (var item in Model.Results.Take(7).ToList())
         {
             
-                <div class="card">
-                    <img class="card-img-top" src="~/Content/Media/placeholder.jpg" width="10%" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color:black">@Html.DisplayFor(itemModel => item.Nombre)</h5>
-                    </div>
+                <div class="card" id="tarjeta" style="margin:2px">
+                    <a href="/Serie" data-trigger="hover"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
                 </div>
-
-            @*<div class="col-md-4">
-
-				<div class="panel" style="border:groove; background-color : antiquewhite;min-height:250px">
-					<div class="panel text-center">
-						<div class="panel-body">
-							<h5 class="card-subtitle">@Html.DisplayFor(itemModel => item.FechaDeLanzamiento)</h5>
-							<p class="card-text">Descripcion: @Html.DisplayFor(itemModel => item.Descripcion)</p>
-
-							<a href="#" class="btn btn-primary">+ Mi Lista</a>
-							<a href="/Pelicula/Details/@item.Id" class="btn btn-primary">Detalles</a>
-</div>
-
-						</div>
-					</div>
-				</div>
                 
-            <div class="card">
-                <div class="card-title">@Html.DisplayFor(itemModel => item.Nombre)</div>
-            </div>
-
-			</div>*@
 		}
-</div>
+
+        <div class="card" style="margin:2px">
+            <div class="card-body">
+                <h5 class="card-title" style="color:black">Ver más</h5>
+            </div>
+        </div>
+</div><br>
+    
+
+    @foreach (var genero in (List<string>)ViewBag.ListaGeneros)
+    {
+        <div class="row" style="vertical-align:bottom">
+            <div class="col-md-3"><h4>Películas de @genero</h4></div>
+            <div class="col-md-2">
+                <h5>Ver más</h5>
+            </div>
+             
+        </div>
+        <div class="card-deck">
+            @foreach (var item in Model.Results)
+            {
+
+                <div class="card" id="tarjeta" style="margin:2px">
+                    <a href="/Serie" data-trigger="hover"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
+                </div>
+            }
+
+            <div class="card" style="margin:2px">
+                <div class="card-body">
+                    <h5 class="card-title" style="color:black">Ver más</h5>
+                </div>
+            </div>
+        </div>
+        <br>
+    }
+
+    
 
 
-@Html.Partial("_Paginator")
 
+
+
+
+
+    
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+</body>
