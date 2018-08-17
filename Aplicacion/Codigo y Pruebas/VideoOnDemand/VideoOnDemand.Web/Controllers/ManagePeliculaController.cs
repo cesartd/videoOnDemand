@@ -107,7 +107,6 @@ namespace VideoOnDemand.Web.Controllers
                     //mapear el modelo de vista a una entidad movie
                     var movie = MapHelper.Map<Movie>(model);
                     movie.FechaDeRegistro = DateTime.Now;
-                    movie.Estatus = EEstatusMedia.VISIBLE;
                     repository.InsertComplete(movie, model.ActoresSeleccionados, model.GenerosSeleccionados);
                     context.SaveChanges();
                     return RedirectToAction("Index");

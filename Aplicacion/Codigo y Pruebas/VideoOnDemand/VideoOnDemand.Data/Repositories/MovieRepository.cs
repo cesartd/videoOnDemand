@@ -89,25 +89,31 @@ namespace VideoOnDemand.Repositories
 
         }
 
+        //Funcion de busqueda y paginación
         public ICollection<Movie> QueryPageByNombreAndGeneroIncluding(string nombre, string genero, Expression<Func<Movie, object>>[] includes, out int totalPages, out int totalRows, string order, int page = 0, int pageSize = 10)
         {
-
+            
             Expression<Func<Movie, bool>> where = s => true;
+            //filtramos las peliculas para que solo tome las que estan visibles e invisibles
             where = where.And(s => s.Estatus != EEstatusMedia.ELIMINADO);
-
+            
+            //si el genero no es vacio
             if (!String.IsNullOrEmpty(genero))
+                //agregar los generos que sean comunes con el dato que se paso en "genero"
                 where = where.And(s => s.Generos.Select(g => g.Nombre).Contains(genero));
             if (!String.IsNullOrEmpty(nombre))
+                //agregar los nomres de peliculas que sean comunes con el dato que se paso en "nombre"
                 where = where.And(s => s.Nombre.Contains(nombre));
 
             int paginas;
             int filas;
 
+            //se llama a la funcion QueryPageIncluding que es parte de el BaseRepository, creado por el proyecto que te separa por paginas y datos las peliculas
             ICollection<Movie> movies = QueryPageIncluding(where, includes, out paginas, out filas, order, page, pageSize);
 
             totalPages = paginas;
             totalRows = filas;
-
+            //se decuelve la busqueda
             return movies;
         }
 

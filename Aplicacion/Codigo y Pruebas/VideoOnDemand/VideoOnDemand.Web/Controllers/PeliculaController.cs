@@ -19,9 +19,11 @@ namespace VideoOnDemand.Web.Controllers
         public ActionResult Index(int page = 1, string Search = null,  int pageSize = 7,string genero = null)
         {
 
-
+            //Cargamos los repositorios de peliculas y generos
             MovieRepository repository = new MovieRepository(context);
             GeneroRepository generoRepository = new GeneroRepository(context);
+
+            //Se crea una expresion del objeto Movie para cargar sus generos
             var includes = new Expression<Func<Movie, object>>[] { m => m.Generos };
 
             int paginasTotales;
@@ -29,15 +31,21 @@ namespace VideoOnDemand.Web.Controllers
 
             ICollection<Movie> movies;
 
+            //Se llama a la fubcion QueryPageByNombreAndGeneroIncluding dentro de MovieRepository, para filtrar los datos
             movies = repository.QueryPageByNombreAndGeneroIncluding(Search, genero, includes, out paginasTotales, out filasTotales, "Nombre", page -1, pageSize);
 
+            //Le pasamos datos al Viewbag para que pueda utilizarlos libremete dentro de la vista
             ViewBag.Busqueda = Search;
             ViewBag.Genero = genero;
+
+            //Se hace un filtro del nombre de los generos que esten activos.
             ViewBag.ListaGeneros = generoRepository.GetAll().Where(g=>g.Activo == true).Select(g => g.Nombre).Where(g => g != genero).ToList();
 
+            //se crea un paginador para poder hacer la paginación con el viewmodel de la película
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
             paginador.PageSize = pageSize;
+            //filtramos las películas para mostrar solo las visibles
             paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies.Where(m=>m.Estatus==EEstatusMedia.VISIBLE));
             paginador.TotalPages = paginasTotales;
             paginador.TotalRows = filasTotales;
