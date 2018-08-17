@@ -9,7 +9,6 @@ using VideoOnDemand.Entities;
 using VideoOnDemand.Repositories;
 using VideoOnDemand.Web.Helpers;
 using VideoOnDemand.Web.Models;
-using Microsoft.AspNet.Identity;
 
 namespace VideoOnDemand.Web.Controllers
 {
@@ -18,7 +17,13 @@ namespace VideoOnDemand.Web.Controllers
         // GET: SeriePrincipal
         public ActionResult Index()
         {
+            #region conseguir Usuario Id
+            UsuarioRepository usrep = new UsuarioRepository(context); //se llama al repository de usuario
+            string idsesion = User.Identity.GetUserId(); //codigo magico para hacer algo, importante incluir la libreria
+            Usuario usuario = usrep.Query(x => x.IdentityId == idsesion).FirstOrDefault(); //se ejecuta el query para conseguir un objeto del usuario
+            #endregion
             SerieRepository repository = new SerieRepository(context);
+            FavoritoRepository favrepo = new FavoritoRepository(context); //se llama al repositorio de favoritos
             //consulte los individuos del repositorio
             var lst = repository.Query(x => x.Estatus != EEstatusMedia.INVISIBLE); //consigue todos los elementos de la tabla de series
             var lst2 = favrepo.GetAll(); //consigue todos los elementos de la tabla de favoritos
@@ -45,9 +50,6 @@ namespace VideoOnDemand.Web.Controllers
                 modelo.isAdded = true; //se cambia el valor a true
             }
 
-            var lst = repository.GetAll();
-            //mapeamos la lista de individuos con una lista de IndividualViewModel
-            var models = MapHelper.Map<IEnumerable<SerieViewModel>>(lst);
             return View(models);
         }
 
