@@ -18,14 +18,7 @@ namespace VideoOnDemand.Web.Controllers
         // GET: SeriePrincipal
         public ActionResult Index()
         {
-            #region conseguir Usuario Id
-            UsuarioRepository usrep = new UsuarioRepository(context); //se llama al repository de usuario
-            string idsesion = User.Identity.GetUserId(); //codigo magico para hacer algo, importante incluir la libreria
-            Usuario usuario = usrep.Query(x => x.IdentityId == idsesion).FirstOrDefault(); //se ejecuta el query para conseguir un objeto del usuario
-            #endregion
-
             SerieRepository repository = new SerieRepository(context);
-            FavoritoRepository favrepo = new FavoritoRepository(context); //se llama al repositorio de favoritos
             //consulte los individuos del repositorio
             var lst = repository.Query(x => x.Estatus != EEstatusMedia.INVISIBLE); //consigue todos los elementos de la tabla de series
             var lst2 = favrepo.GetAll(); //consigue todos los elementos de la tabla de favoritos
@@ -52,6 +45,9 @@ namespace VideoOnDemand.Web.Controllers
                 modelo.isAdded = true; //se cambia el valor a true
             }
 
+            var lst = repository.GetAll();
+            //mapeamos la lista de individuos con una lista de IndividualViewModel
+            var models = MapHelper.Map<IEnumerable<SerieViewModel>>(lst);
             return View(models);
         }
 
@@ -110,6 +106,14 @@ namespace VideoOnDemand.Web.Controllers
                ViewBag.UsuarioId = usuario.Id;
             }
             return View(temporadas);*/
+            //var usuarioId = User.Identity.GetUserId();
+            //var repositoryUser = new UsuarioRepository(context);
+            //var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+            //if (usuario != null)
+            //{
+            //   ViewBag.UsuarioId = usuario.Id;
+            //}
+            //return View(temporadas);
 
         [HttpPost]
         public ActionResult AgregarFavorito(FavoritoViewModel model)
