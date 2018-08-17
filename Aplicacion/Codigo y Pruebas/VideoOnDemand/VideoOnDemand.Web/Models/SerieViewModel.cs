@@ -6,6 +6,7 @@ namespace VideoOnDemand.Web.Models
 {
     public class SerieViewModel
     {
+        public bool? isAdded = false;
         public ICollection<EpisodioViewModel> Episodios { get; set; }
         public int? Id { get; set; }
         [Required]
