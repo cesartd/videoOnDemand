@@ -16,7 +16,7 @@ namespace VideoOnDemand.Web.Controllers
     {
         VideoOnDemandContext context = new VideoOnDemandContext();
         // GET: Pelicula
-        public ActionResult Index(int page = 1, string Search = null,  int pageSize = 7,string genero = null)
+        public ActionResult Index(int page = 1, string Search = null,  int pageSize = 6,string genero = null)
         {
 
 

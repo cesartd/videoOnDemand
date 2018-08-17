@@ -73,14 +73,14 @@ namespace VideoOnDemand.Web.Controllers
             //var models = MapHelper.Map<IEnumerable<EpisodioViewModel>>(lst);
 
 
-            var usuarioId = User.Identity.GetUserId();
-            var repositoryUser = new UsuarioRepository(context);
-            var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
-            if (usuario != null)
-            {
-               ViewBag.UsuarioId = usuario.Id;
-            }
-            return View(temporadas);
+            //var usuarioId = User.Identity.GetUserId();
+            //var repositoryUser = new UsuarioRepository(context);
+            //var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+            //if (usuario != null)
+            //{
+            //   ViewBag.UsuarioId = usuario.Id;
+            //}
+            //return View(temporadas);
 
         [HttpPost]
         public ActionResult AgregarFavorito(FavoritoViewModel model)

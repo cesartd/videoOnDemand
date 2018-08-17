@@ -44,18 +44,27 @@
 <h4>Películas</h4>
 
 <div class="card-deck">
-		@foreach (var item in Model.Results.Take(7).ToList())
+		@foreach (var item in Model.Results.Take(6).ToList())
         {
-            
-                <div class="card" id="tarjeta" style="margin:2px">
-                    <a href="/Pelicula/Details/@item.Id"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
-                </div>
-                
-		}
 
-        <div class="card" style="margin:2px">
-                <a href="/Pelicula/Lista" class="card-title" style="color:black">Ver más</a>
+            <a href="/Pelicula/Details/@item.Id">
+                <div class="card" id="tarjeta" style="margin:2px">
+                    <img class="card-img" src="~/Content/Media/placeholder.jpg" alt="Card image cap">
+                    <div class="card-img-overlay">
+                        <h6 class="card-title" style="color:black;">@item.Nombre</h6>
+                    </div>
+                </div>
+            </a>
+        }
+
+    <a href="/Pelicula/Lista">
+        <div class="card" id="tarjeta" style="margin:2px">
+            <img class="card-img" src="~/Content/Media/placeholder.jpg" alt="Card image cap">
+            <div class="card-img-overlay">
+                <h6>Ver más</h6>
+            </div>
         </div>
+    </a>
 </div><br>
     
 
@@ -69,20 +78,26 @@
              
         </div>
         <div class="card-deck">
-            @foreach (var item in Model.Results)
+            @foreach (var item in Model.Results.Take(6).ToList())
             {
-
-                <div class="card" id="tarjeta" style="margin:2px">
-                    <a href="/Pelicula/Details/@item.Id"><img class="card-img-top" src="~/Content/Media/placeholder.jpg" alt="Card image cap"></a>
-                </div>
+                <a href="/Pelicula/Details/@item.Id">
+                    <div class="card" id="tarjeta" style="margin:2px">
+                        <img class="card-img" src="~/Content/Media/placeholder.jpg" alt="Card image cap">
+                        <div class="card-img-overlay">
+                            <h6 class="card-title" style="color:black;">@item.Nombre</h6>
+                        </div>
+                    </div>
+                </a>
             }
 
-
-            <div class="card" style="margin:2px">
-                <div class="card-body">
-                    <a href="/Pelicula/Lista?Search=&genero=@genero&pageSize=10" style="color:black">Ver más</a>
+            <a href="/Pelicula/Lista?Search=&genero=@genero&pageSize=10">
+                <div class="card" id="tarjeta" style="margin:2px">
+                    <img class="card-img" src="~/Content/Media/placeholder.jpg" alt="Card image cap">
+                    <div class="card-img-overlay">
+                        <h6>Ver más</h6>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <br>
     }
