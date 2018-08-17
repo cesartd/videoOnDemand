@@ -44,7 +44,7 @@ namespace VideoOnDemand.Web.Controllers
                         where favo.UsuarioId == usuario.Id //y de estas series se sacan las que el usuario agrego a su lista de favoritos
                         select serie; //los cuales se guardan en 'query'
 
-            foreach (SerieViewModel mod in query) 
+            foreach (SerieViewModel mod in query)
             {
                 //Es importante agregar a su ViewModel un variable booleano (eg. public bool isAdded = false)
                 //este booleano se vuelve true cuando se encuentra una serie que el usuario agrego a su lista
@@ -95,21 +95,16 @@ namespace VideoOnDemand.Web.Controllers
             ViewBag.SerieId = id;
             ViewBag.SerieDetalle = serieModel;
 
-            return View(temporadas);
-        }
-
-            //mapeamos la lista de individuos con una lista de EpisodioViewModel
-            //var models = MapHelper.Map<IEnumerable<EpisodioViewModel>>(lst);
-
-
             var usuarioId = User.Identity.GetUserId();
             var repositoryUser = new UsuarioRepository(context);
             var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
+
             if (usuario != null)
             {
                ViewBag.UsuarioId = usuario.Id;
             }
             return View(temporadas);
+}
 
         [HttpPost]
         public ActionResult AgregarFavorito(FavoritoViewModel model)
