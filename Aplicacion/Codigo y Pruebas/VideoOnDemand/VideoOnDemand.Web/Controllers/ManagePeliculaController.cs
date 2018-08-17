@@ -192,6 +192,7 @@ namespace VideoOnDemand.Web.Controllers
                 var actor = actorRepo.Query(null, "Nombre").Where(g => g.Activo == true).ToList();
                 model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(genero);
                 model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(actor);
+                model.FechaDeRegistro = DateTime.Now;
                 return View(model);
             }
         }

@@ -38,7 +38,7 @@ namespace VideoOnDemand.Web.Controllers
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
             paginador.PageSize = pageSize;
-            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies);
+            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies.Where(m=>m.Estatus==EEstatusMedia.VISIBLE));
             paginador.TotalPages = paginasTotales;
             paginador.TotalRows = filasTotales;
 
@@ -112,7 +112,7 @@ namespace VideoOnDemand.Web.Controllers
             var paginador = new PaginatorViewModel<MovieViewModel>();
             paginador.Page = page;
             paginador.PageSize = pageSize;
-            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies);
+            paginador.Results = MapHelper.Map<ICollection<MovieViewModel>>(movies.Where(m=>m.Estatus==EEstatusMedia.VISIBLE));
             paginador.TotalPages = paginasTotales;
             paginador.TotalRows = filasTotales;
 

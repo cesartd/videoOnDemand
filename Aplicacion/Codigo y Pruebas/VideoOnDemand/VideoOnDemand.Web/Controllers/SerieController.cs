@@ -17,24 +17,35 @@ namespace VideoOnDemand.Web.Controllers
         // GET: Serie
         public ActionResult Index()
         {
-            var model = new SerieViewModel();
+           /* var model = new SerieViewModel();
             GeneroRepository generoRepository = new GeneroRepository(context);
             var lst2 = generoRepository.GetAll();
             model.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst2);
 
             PersonaRepository personaRepository = new PersonaRepository(context);
             var lst3 = personaRepository.GetAll();
-            model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst3);
-
-
-
+            model.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst3);*/
             SerieRepository repository = new SerieRepository(context);
             //consulte los individuos del repositorio
-            var lst = repository.Query(n => n.Estatus == EEstatusMedia.VISIBLE);
+            var lst = repository.GetAll();
 
             //mapeamos la lista de individuos con una lista de IndividualViewModel
             var models = MapHelper.Map<IEnumerable<SerieViewModel>>(lst);
 
+            GeneroRepository generoRepository = new GeneroRepository(context);
+            var lst2 = generoRepository.GetAll();
+            //models.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst2);
+
+            PersonaRepository personaRepository = new PersonaRepository(context);
+            var lst3 = personaRepository.GetAll();
+           // models.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst3);
+
+            foreach(SerieViewModel mod in models)
+            {
+                var modelo = models.FirstOrDefault(x => x.Id == mod.Id);
+                modelo.GenerosDisponibles = MapHelper.Map<ICollection<GeneroViewModel>>(lst2);
+                modelo.ActoresDisponibles = MapHelper.Map<ICollection<PersonaViewModel>>(lst3); 
+            }
             return View(models);
         }
 
@@ -85,7 +96,7 @@ namespace VideoOnDemand.Web.Controllers
                     bool existeSerie = repository.QueryByExample(serieQry).Count > 0;
                     if (existeSerie)
                     {
-                        ModelState.AddModelError("Nombre", "La serie ya existe!.");
+                        ModelState.AddModelError("Nombre", "La serie ya existe!");
                         return View(model);
                     }
                     #endregion
@@ -211,12 +222,12 @@ namespace VideoOnDemand.Web.Controllers
                 var epi = repository2.Query(n => n.SerieId == id).ToList();
 
                 serie.Estatus = EEstatusMedia.ELIMINADO;
-                repository.Update(serie);
-
+                repository.Delete(serie);
+                
                 foreach (var item in epi)
                 {
                     item.Estatus = EEstatusMedia.ELIMINADO;
-                    repository2.Update(item);
+                    repository2.Delete(item);
                 }
 
                 context.SaveChanges();
