@@ -93,7 +93,7 @@ namespace VideoOnDemand.Repositories
         {
 
             Expression<Func<Movie, bool>> where = s => true;
-            where = where.And(s => s.Estatus == EEstatusMedia.VISIBLE);
+            where = where.And(s => s.Estatus != EEstatusMedia.ELIMINADO);
 
             if (!String.IsNullOrEmpty(genero))
                 where = where.And(s => s.Generos.Select(g => g.Nombre).Contains(genero));
