@@ -18,7 +18,72 @@
 .nav-tabs {
     margin-bottom: 0;
 }
+
+.modal-backdrop.in {
+    filter: alpha(opacity=7);
+    opacity: 0.7;
+}
+ 
+.modal-content {
+    background: none;
+    border: 0;
+    -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+    -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+}
+ 
+.modal-body {
+    padding: 0 25px 25px 25px;
+}
+ 
+.modal-header {
+    padding: 25px 25px 15px 25px;
+    text-align: right;
+}
+ 
+.modal-header, .modal-footer {
+    border: 0;
+}
+ 
+.modal-header .close {
+    float: none;
+    margin: 0;
+    font-size: 36px;
+    color: #fff;
+    font-weight: 300;
+    text-shadow: none;
+    opacity: 1;
+}
 </style>
+
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <input hidden id="auxId" value=""/>
+                <button id="btnCloseVideo" onclick="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-video">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <video id="videoOnPlay" class="embed-responsive-item" controls>
+                            <source src="~/Content/Media/video.mp4" type="video/mp4" />
+                        </video>
+
+                    </div>
+                </div>
+                <br />
+                
+                <input id="hdnUrlGetOnPlay" type="hidden" value="@Url.Action("GetOnPlay", "MediaOnPlay")" />
+                <input id="hdnUrlAgregarOnPlay" type="hidden" value="@Url.Action("AgregarOnPlay","MediaOnPlay")"/>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <h2>&nbsp;&nbsp;&nbsp;Detalles</h2>
 <br />
@@ -77,6 +142,8 @@
 
     </div>
 
+    
+
     <div style="clear:both">
 
     </div>
@@ -124,9 +191,9 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">@epi.Nombre</h5>
-                                        <p class="card-text">@(epi.DuracionMin) min.</p>
-                                        <a href="#" class="btn btn-primary">Reproducir</a>
+                                        <h5 class="card-title" style="color:black">@epi.Nombre</h5>
+                                        <p class="card-text" style="color:black">@(epi.DuracionMin) min.</p>
+                                        <button onclick="cargarModal(@epi.Id)" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Reproducir</button>
                                     </div>
                                 </div>
                             </div>
@@ -150,8 +217,10 @@
 }
 
 @section Scripts{
-    <script src="~/Scripts/opinion.api.js">
-    </script>
+@Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/opinion.api.js"></script>
+    <script src="~/Scripts/mediaOnPlay.api.js"></script>
+
     <script>
         $('#tabsSerie').on("click", "li", function (event) {
             var activeTab = $(this).find('a').attr('href');
@@ -160,6 +229,7 @@
             
         });
     </script>
+
 }
 
 

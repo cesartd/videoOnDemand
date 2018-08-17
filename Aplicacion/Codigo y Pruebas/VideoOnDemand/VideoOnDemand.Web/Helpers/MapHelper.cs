@@ -25,8 +25,10 @@ namespace VideoOnDemand.Web.Helpers
                 x.CreateMap<Opinion, OpinionViewModel>().ReverseMap();
                 x.CreateMap<Episodio, EpisodioViewModel>().ReverseMap();
                 x.CreateMap<Favorito, FavoritoViewModel>().ReverseMap();
+                x.CreateMap<MediaOnPlay, MediaOnPlayViewModel>().ReverseMap();
+                x.CreateMap<Media, MediaActorGeneroViewModel>().ReverseMap();
 
-               });
+            });
             mapper = config.CreateMapper();
         }
 
