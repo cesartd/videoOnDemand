@@ -27,7 +27,7 @@ namespace VideoOnDemand.Web.Controllers
             SerieRepository repository = new SerieRepository(context);
             FavoritoRepository favrepo = new FavoritoRepository(context); //se llama al repositorio de favoritos
             //consulte los individuos del repositorio
-            var lst = repository.GetAll(); //consigue todos los elementos de la tabla de series
+            var lst = repository.Query(x => x.Estatus != EEstatusMedia.INVISIBLE); //consigue todos los elementos de la tabla de series
             var lst2 = favrepo.GetAll(); //consigue todos los elementos de la tabla de favoritos
             //mapeamos la lista de individuos con una lista de de sus modelos
             var models = MapHelper.Map<IEnumerable<SerieViewModel>>(lst); //se convierte los elementos conseguidos del repositorio a una lista de objetos SerieViewModel
@@ -102,14 +102,14 @@ namespace VideoOnDemand.Web.Controllers
             //var models = MapHelper.Map<IEnumerable<EpisodioViewModel>>(lst);
 
 
-            var usuarioId = User.Identity.GetUserId();
+           /* var usuarioId = User.Identity.GetUserId();
             var repositoryUser = new UsuarioRepository(context);
             var usuario = repositoryUser.Query(c => c.IdentityId == usuarioId).FirstOrDefault();
             if (usuario != null)
             {
                ViewBag.UsuarioId = usuario.Id;
             }
-            return View(temporadas);
+            return View(temporadas);*/
 
         [HttpPost]
         public ActionResult AgregarFavorito(FavoritoViewModel model)

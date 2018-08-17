@@ -9,11 +9,13 @@ namespace VideoOnDemand.Web.Models
         public bool? isAdded = false;
         public ICollection<EpisodioViewModel> Episodios { get; set; }
         public int? Id { get; set; }
-        [Required]
+        [Required (ErrorMessage ="Nombre Requerido!")]
         public string Nombre { get; set; }
 
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+
+        [Required (ErrorMessage = "Duración Requerido!")]
         [Display(Name = "Duración")]
         public int? DuracionMin { get; set; }
 
@@ -27,6 +29,7 @@ namespace VideoOnDemand.Web.Models
         [Display(Name = "Fecha de lanzamiento")]
         public DateTime? FechaDeLanzamiento { get; set; }
 
+        [Required(ErrorMessage = "Estado Requerido!")]
         public int? Estatus { get; set; }
         public ICollection<GeneroViewModel> GenerosDisponibles { get; set; }
         public int[] GenerosSeleccionados { get; set; }
